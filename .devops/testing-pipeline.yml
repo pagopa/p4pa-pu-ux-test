@@ -44,6 +44,10 @@ stages:
               current_tag: 'flussi'
         steps:
           - checkout: self
+          - bash: |
+              cd ${{ parameters.projectDir }}
+              echo "current folder: $(pwd)"
+            displayName: 'Move to project folder'
           - task: UseNode@1
             inputs:
               version: $(nodeVersion)
@@ -84,6 +88,10 @@ stages:
         condition: and(succeeded(), and( not(eq('${{ parameters.tag }}', '')), not(eq('${{ parameters.tag }}', 'all'))))
         steps:
           - checkout: self
+          - bash: |
+              cd ${{ parameters.projectDir }}
+              echo "current folder: $(pwd)"
+            displayName: 'Move to project folder'
           - task: UseNode@1
             inputs:
               version: $(nodeVersion)

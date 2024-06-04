@@ -52,7 +52,6 @@ stages:
             gestione flussi:
               current_tag: 'flussi'
         steps:
-          - checkout: self
           - template: templates/node-job-setup/template.yaml@pagopaCommons
             parameters:
               nodeVersion: $(NODE_VERSION)
@@ -63,9 +62,6 @@ stages:
                 npm | "$(Agent.OS)"
               path: $(npm_config_cache)
             displayName: Cache npm
-          - script: |
-              npm install
-            displayName: 'Install npm'
           - task: DownloadSecureFile@1
             name: pu_secrets
             displayName: 'Download PU secrets'
@@ -88,7 +84,6 @@ stages:
       - job: "Run_manual_ux_tests"
         condition: and(succeeded(), and( not(eq('${{ parameters.tag }}', '')), not(eq('${{ parameters.tag }}', 'all'))))
         steps:
-          - checkout: self
           - template: templates/node-job-setup/template.yaml@pagopaCommons
             parameters:
               nodeVersion: $(NODE_VERSION)
@@ -99,9 +94,6 @@ stages:
                 npm | "$(Agent.OS)"
               path: $(npm_config_cache)
             displayName: Cache npm
-          - script: |
-              npm install
-            displayName: 'Install npm'
           - task: DownloadSecureFile@1
             name: pu_secrets
             displayName: 'Download PU secrets'

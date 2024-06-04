@@ -1,0 +1,9 @@
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+config/.pu_secrets.yaml
+report/*.html
+report/*.xml
+report/*.json

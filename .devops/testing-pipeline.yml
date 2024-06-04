@@ -4,7 +4,18 @@ trigger:
       - main
 
 variables:
+  NODE_VERSION: '21.7.1'
+  npm_config_cache: $(Pipeline.Workspace)/.npm
   selfHostedAgentPool: 'p4pa-dev-linux-app'
+
+resources:
+  repositories:
+    - repository: pagopaCommons
+      type: github
+      name: pagopa/azure-pipeline-templates
+      ref: refs/tags/v18
+      # Cannot use variables here!
+      endpoint: 'azure-devops-github-ro'
 
 pool:
   vmImage: 'ubuntu-22.04'
@@ -42,6 +53,16 @@ stages:
               current_tag: 'flussi'
         steps:
           - checkout: self
+          - template: templates/node-job-setup/template.yaml@pagopaCommons
+            parameters:
+              nodeVersion: $(NODE_VERSION)
+          - task: Cache@2
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package.json'
+              restoreKeys: |
+                npm | "$(Agent.OS)"
+              path: $(npm_config_cache)
+            displayName: Cache npm
           - script: |
               npm install
             displayName: 'Install npm'
@@ -68,6 +89,16 @@ stages:
         condition: and(succeeded(), and( not(eq('${{ parameters.tag }}', '')), not(eq('${{ parameters.tag }}', 'all'))))
         steps:
           - checkout: self
+          - template: templates/node-job-setup/template.yaml@pagopaCommons
+            parameters:
+              nodeVersion: $(NODE_VERSION)
+          - task: Cache@2
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package.json'
+              restoreKeys: |
+                npm | "$(Agent.OS)"
+              path: $(npm_config_cache)
+            displayName: Cache npm
           - script: |
               npm install
             displayName: 'Install npm'

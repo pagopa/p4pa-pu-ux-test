@@ -2,11 +2,9 @@
   "name": "p4pa-pu-ux-test",
   "version": "1.0.0",
   "description": "A repository designed to gather tests that simulate the user experience on the Piattaforma Unitaria portal.",
-  "main": "index.js",
   "scripts": {
     "tests": "cucumber-js -f json:report/report.json && node report.js && cat report/report.json | npx cucumber-junit > report/junitreport.xml"
   },
-  "type": "commonjs",
   "keywords": [],
   "author": "",
   "license": "ISC",

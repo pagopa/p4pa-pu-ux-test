@@ -1,4 +1,4 @@
-const { BeforeAll, Before, AfterAll, After, Status } = require ('cucumber')
+const { BeforeAll, Before, AfterAll, After, Status } = require ('@cucumber/cucumber');
 const { chromium } = require('playwright');
 
 const options = {

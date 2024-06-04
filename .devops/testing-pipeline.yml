@@ -5,7 +5,7 @@ trigger:
 
 variables:
   nodeVersion: '21.7.1'
-  npmConfigCache: $(Pipeline.Workspace)/.npm
+  npm_config_cache: $(Pipeline.Workspace)/.npm
   selfHostedAgentPool: 'p4pa-dev-linux-app'
 
 pool:
@@ -44,23 +44,19 @@ stages:
               current_tag: 'flussi'
         steps:
           - checkout: self
-          - bash: |
-              cd ${{ parameters.projectDir }}
-              echo "current folder: $(pwd)"
-            displayName: 'Move to project folder'
           - task: UseNode@1
             inputs:
               version: $(nodeVersion)
             displayName: 'Set up Node.js'
           - task: Cache@2
             inputs:
-              key: 'npm | "$(Agent.OS)" | package.json'
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
               restoreKeys: |
                 npm | "$(Agent.OS)"
-              path: $(npmConfigCache)
+              path: $(npm_config_cache)
             displayName: Cache npm
           - script: |
-              npm install
+              npm ci
             displayName: 'Install dependencies'
           - script: |
               npx playwright install --with-deps
@@ -88,23 +84,19 @@ stages:
         condition: and(succeeded(), and( not(eq('${{ parameters.tag }}', '')), not(eq('${{ parameters.tag }}', 'all'))))
         steps:
           - checkout: self
-          - bash: |
-              cd ${{ parameters.projectDir }}
-              echo "current folder: $(pwd)"
-            displayName: 'Move to project folder'
           - task: UseNode@1
             inputs:
               version: $(nodeVersion)
             displayName: 'Set up Node.js'
           - task: Cache@2
             inputs:
-              key: 'npm | "$(Agent.OS)" | package.json'
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
               restoreKeys: |
                 npm | "$(Agent.OS)"
-              path: $(npmConfigCache)
+              path: $(npm_config_cache)
             displayName: Cache npm
           - script: |
-              npm install
+              npm ci
             displayName: 'Install dependencies'
           - script: |
               npx playwright install --with-deps

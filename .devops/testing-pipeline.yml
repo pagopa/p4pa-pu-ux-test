@@ -4,18 +4,9 @@ trigger:
       - main
 
 variables:
-  NODE_VERSION: '21.7.1'
-  npm_config_cache: $(Pipeline.Workspace)/.npm
+  nodeVersion: '21.7.1'
+  npmConfigCache: $(Pipeline.Workspace)/.npm
   selfHostedAgentPool: 'p4pa-dev-linux-app'
-
-resources:
-  repositories:
-    - repository: pagopaCommons
-      type: github
-      name: pagopa/azure-pipeline-templates
-      ref: refs/tags/v18
-      # Cannot use variables here!
-      endpoint: 'azure-devops-github-ro'
 
 pool:
   vmImage: 'ubuntu-22.04'
@@ -52,16 +43,21 @@ stages:
             gestione flussi:
               current_tag: 'flussi'
         steps:
-          - template: templates/node-job-setup/template.yaml@pagopaCommons
-            parameters:
-              nodeVersion: $(NODE_VERSION)
+          - checkout: self
+          - task: UseNode@1
+            inputs:
+              version: $(nodeVersion)
+            displayName: 'Set up Node.js'
           - task: Cache@2
             inputs:
               key: 'npm | "$(Agent.OS)" | package.json'
               restoreKeys: |
                 npm | "$(Agent.OS)"
-              path: $(npm_config_cache)
+              path: $(npmConfigCache)
             displayName: Cache npm
+          - script: |
+              npm install
+            displayName: 'Install dependencies'
           - task: DownloadSecureFile@1
             name: pu_secrets
             displayName: 'Download PU secrets'
@@ -84,16 +80,21 @@ stages:
       - job: "Run_manual_ux_tests"
         condition: and(succeeded(), and( not(eq('${{ parameters.tag }}', '')), not(eq('${{ parameters.tag }}', 'all'))))
         steps:
-          - template: templates/node-job-setup/template.yaml@pagopaCommons
-            parameters:
-              nodeVersion: $(NODE_VERSION)
+          - checkout: self
+          - task: UseNode@1
+            inputs:
+              version: $(nodeVersion)
+            displayName: 'Set up Node.js'
           - task: Cache@2
             inputs:
               key: 'npm | "$(Agent.OS)" | package.json'
               restoreKeys: |
                 npm | "$(Agent.OS)"
-              path: $(npm_config_cache)
+              path: $(npmConfigCache)
             displayName: Cache npm
+          - script: |
+              npm install
+            displayName: 'Install dependencies'
           - task: DownloadSecureFile@1
             name: pu_secrets
             displayName: 'Download PU secrets'

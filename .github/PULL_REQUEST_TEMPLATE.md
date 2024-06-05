@@ -35,7 +35,7 @@
 ### Did you update secrets accordingly?
 
 - [ ] Yes
-  - [ ] `.pu_secrets_template.yaml`
+  - [ ] `.pu_ux_secrets_template.yaml`
   - [ ] Pipelines' secure file
   - [ ] Confluence
 - [ ] Not needed

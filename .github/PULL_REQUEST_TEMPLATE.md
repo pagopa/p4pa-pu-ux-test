@@ -20,13 +20,6 @@
 - [ ] Test case
 - [ ] Test suite
 
-### Test type
-
-- [ ] Functional test
-- [ ] Smoke test
-- [ ] End to end
-- [ ] Performance
-
 ### Type of changes
 
 - [ ] Add new test case/suite

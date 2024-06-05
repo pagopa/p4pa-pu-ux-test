@@ -1,7 +1,7 @@
 const common = `
   --require config/config.js 
   --require setup/hooks.js 
-  --require step-definitions/**/*.steps.js
+  --require feature/step/**/*.steps.js
   `;
 
 module.exports = {

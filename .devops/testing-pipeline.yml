@@ -62,7 +62,7 @@ stages:
               npx playwright install --with-deps
             displayName: 'Install Playwright browsers'
           - task: DownloadSecureFile@1
-            name: pu_secrets
+            name: pu_ux_secrets
             displayName: 'Download PU secrets'
             inputs:
               secureFile: 'pu_ux_secrets.yaml'
@@ -102,7 +102,7 @@ stages:
               npx playwright install --with-deps
             displayName: 'Install Playwright browsers'
           - task: DownloadSecureFile@1
-            name: pu_secrets
+            name: pu_ux_secrets
             displayName: 'Download PU secrets'
             inputs:
               secureFile: 'pu_ux_secrets.yaml'

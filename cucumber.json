@@ -1,0 +1,15 @@
+{
+  "default": {
+    "formatOptions": {
+        "snippetInterface": "async-await"
+    },
+    "import": [
+      "features/step/**/*.steps.js",
+      "config/config.mjs",
+      "setup/hooks.cjs"
+    ],
+    "paths" : [
+      "features/**/*.feature"
+    ]
+  }
+}

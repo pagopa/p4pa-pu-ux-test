@@ -2,9 +2,11 @@ const { BeforeAll, Before, AfterAll, After, Status } = require ('@cucumber/cucum
 const { chromium } = require('playwright');
 
 const options = {
-  headless: true,
+  headless: false,
   slowMo: 100
 };
+
+global.baseUrl = 'https://payhub.dev.p4pa.pagopa.it/myoperatore/home';
 
 // Create a global browser for the test session.
 BeforeAll(async () => {

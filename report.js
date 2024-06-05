@@ -1,4 +1,4 @@
-const { generate } = require ("cucumber-html-reporter");
+import { generate } from 'cucumber-html-reporter';
 
 const options ={
      theme:'bootstrap',

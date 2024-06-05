@@ -8,10 +8,10 @@ A repository designed to gather tests that simulate the user experience on the P
 - Report: ```npm install cucumberjs-junitxml --save-dev``` & ```npm install cucumber-html-reporter --save-dev```
 
 ## Test execution
-Execute ```npm test```, defining a script in package.json:
+Execute ```npm run tests```, defining a script in package.json:
 ```json
 "scripts": {
-    "test": "cucumber-js -f json:report/report.json && node report.js && cat report/report.json | npx cucumber-junit > report/junitreport.xml"
+    "tests": "cucumber-js -f json:report/report.json && node report.js && cat report/report.json | npx cucumber-junit > report/junitreport.xml"
 } 
 ```
 

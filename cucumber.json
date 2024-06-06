@@ -4,9 +4,7 @@
         "snippetInterface": "async-await"
     },
     "format": [
-      "@cucumber/pretty-formatter",
-      ["junit", "report/junitreport.xml"],
-      ["html", "report/cucumber-html-report.html"]
+      "@cucumber/pretty-formatter"
     ],
     "import": [
       "features/step/**/*.steps.js",

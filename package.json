@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A repository designed to gather tests that simulate the user experience on the Piattaforma Unitaria portal.",
   "scripts": {
-    "tests": "cucumber-js -f json:report/report.json & node report.html.js & node report.xml.js",
+    "tests": "cucumber-js -f json:report/report.json; node report.html.js; node report.xml.js",
     "tests:local": "cucumber-js -f json:report/report.json & node report.html.js"
   },
   "type": "module",

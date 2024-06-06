@@ -73,6 +73,7 @@ stages:
               PU_SECRET_PATH: $(pu_ux_secrets.secureFilePath)
               PU_TARGET_ENV: ${{ parameters.env }}
               TAGS: '$(current_tag)'
+            continueOnError: true
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: 'JUnit'
@@ -114,6 +115,7 @@ stages:
             env:
               PU_SECRET_PATH: $(pu_ux_secrets.secureFilePath)
               PU_TARGET_ENV: ${{ parameters.env }}
+            continueOnError: true
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: 'JUnit'

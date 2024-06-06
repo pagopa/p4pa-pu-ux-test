@@ -122,6 +122,7 @@ stages:
               testResultsFiles: 'report/junitreport.xml'
               searchFolder: $(Build.SourcesDirectory)
               failTaskOnFailedTests: true
+              publishRunAttachments: true
             continueOnError: true
             condition: always()
             displayName: 'Publish Reports'

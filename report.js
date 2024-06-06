@@ -5,6 +5,6 @@ const options ={
      jsonFile:'report/report.json',
      output:'report/cucumber-html-report.html',
      reportSuiteAsScenaros:true,
-     launchReport:false,
+     launchReport:true,
 }
 generate(options)

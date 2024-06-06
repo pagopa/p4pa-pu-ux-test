@@ -15,7 +15,7 @@ async function newPage() {
 function getNameOfUser (user) {
     var name;
     if ( user == 'Amministratore Globale') {
-        name = adminGlobal.name;
+        name = "test";
     } else if ( user == 'Amministratore Ente') {
         name = adminEnte.name;
     } else if (user == 'Operatore') { 

@@ -82,6 +82,7 @@ stages:
               searchFolder: $(Build.SourcesDirectory)
               failTaskOnFailedTests: true
             continueOnError: true
+            condition: always()
             displayName: 'Publish Reports'
       - job: "Run_manual_ux_tests"
         condition: and(succeeded(), and( not(eq('${{ parameters.tag }}', '')), not(eq('${{ parameters.tag }}', 'all'))))
@@ -124,5 +125,6 @@ stages:
               searchFolder: $(Build.SourcesDirectory)
               failTaskOnFailedTests: true
             continueOnError: true
+            condition: always()
             displayName: 'Publish Reports'
 

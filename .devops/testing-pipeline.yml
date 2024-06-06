@@ -79,6 +79,8 @@ stages:
               testResultsFiles: 'report/junitreport.xml'
               testRunTitle: 'Test Report'
               searchFolder: $(Build.SourcesDirectory)
+              failTaskOnFailedTests: true
+            continueOnError: true
             displayName: 'Publish Reports'
       - job: "Run_manual_ux_tests"
         condition: and(succeeded(), and( not(eq('${{ parameters.tag }}', '')), not(eq('${{ parameters.tag }}', 'all'))))
@@ -118,5 +120,7 @@ stages:
               testResultsFiles: 'report/junitreport.xml'
               testRunTitle: 'Test Report'
               searchFolder: $(Build.SourcesDirectory)
+              failTaskOnFailedTests: true
+            continueOnError: true
             displayName: 'Publish Reports'
 

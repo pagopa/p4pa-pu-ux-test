@@ -1,5 +1,5 @@
 #language: it
-@Ente
+@ente
 Funzionalità: Gestione Enti
 
     Scenario: L'utente Amministratore Globale visualizza l'Ente Demo nella lista

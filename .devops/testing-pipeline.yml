@@ -59,7 +59,7 @@ stages:
               npm ci
             displayName: 'Install dependencies'
           - script: |
-              npx playwright install-deps
+              npx playwright install
             displayName: 'Install Playwright browsers'
           - task: DownloadSecureFile@1
             name: pu_ux_secrets
@@ -103,7 +103,7 @@ stages:
               npm ci
             displayName: 'Install dependencies'
           - script: |
-              npx playwright install-deps
+              npx playwright install
             displayName: 'Install Playwright browsers'
           - task: DownloadSecureFile@1
             name: pu_ux_secrets

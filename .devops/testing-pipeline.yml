@@ -79,7 +79,7 @@ stages:
               testResultsFormat: 'JUnit'
               testResultsFiles: |
                 'report/junitreport.xml'
-                'report/**.png'
+                'report/*.png'
               testRunTitle: 'Test Report'
               searchFolder: $(Build.SourcesDirectory)
               failTaskOnFailedTests: true
@@ -124,11 +124,10 @@ stages:
               testResultsFormat: 'JUnit'
               testResultsFiles: |
                 'report/junitreport.xml'
-                'report/**.png'
+                'report/*.png'
               testRunTitle: 'Test Report'
               searchFolder: $(Build.SourcesDirectory)
               failTaskOnFailedTests: true
             continueOnError: true
             condition: always()
             displayName: 'Publish Reports'
-

@@ -15,7 +15,7 @@ async function newPage() {
 function getNameOfUser (user) {
     var name;
     if ( user == 'Amministratore Globale') {
-        name = "test";
+        name = adminGlobal.name;
     } else if ( user == 'Amministratore Ente') {
         name = adminEnte.name;
     } else if (user == 'Operatore') { 
@@ -30,7 +30,7 @@ async function insertCredential(user) {
     var userId;
     var password;
     if ( user == 'Amministratore Globale') {
-        userId = adminGlobal.userId;
+        userId = "test";
         password = adminGlobal.password;
     } else if ( user == 'Amministratore Ente') {
         userId = adminEnte.userId;

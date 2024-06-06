@@ -78,7 +78,6 @@ stages:
             inputs:
               testResultsFormat: 'JUnit'
               testResultsFiles: 'report/junitreport.xml'
-              testRunTitle: 'Test Report'
               searchFolder: $(Build.SourcesDirectory)
               failTaskOnFailedTests: true
             continueOnError: true
@@ -121,7 +120,6 @@ stages:
             inputs:
               testResultsFormat: 'JUnit'
               testResultsFiles: 'report/junitreport.xml'
-              testRunTitle: 'Test Report'
               searchFolder: $(Build.SourcesDirectory)
               failTaskOnFailedTests: true
             continueOnError: true

@@ -4,7 +4,7 @@ const options ={
      theme:'bootstrap',
      jsonFile:'report/report.json',
      output:'report/cucumber-html-report.html',
-     reportSuiteAsScenaros:true,
+     reportSuiteAsScenarios:true,
      launchReport:false,
 }
 generate(options)

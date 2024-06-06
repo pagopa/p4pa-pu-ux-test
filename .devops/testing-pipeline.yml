@@ -77,7 +77,9 @@ stages:
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: 'JUnit'
-              testResultsFiles: 'report/junitreport.xml'
+              testResultsFiles: |
+                'report/junitreport.xml'
+                'report/**.png'
               testRunTitle: 'Test Report'
               searchFolder: $(Build.SourcesDirectory)
               failTaskOnFailedTests: true
@@ -120,7 +122,9 @@ stages:
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: 'JUnit'
-              testResultsFiles: 'report/junitreport.xml'
+              testResultsFiles: |
+                'report/junitreport.xml'
+                'report/**.png'
               testRunTitle: 'Test Report'
               searchFolder: $(Build.SourcesDirectory)
               failTaskOnFailedTests: true

@@ -6,12 +6,13 @@
     "tests": "cucumber-js -f json:report/report.json && node report.js && cat report/report.json | npx cucumber-junit > report/junitreport.xml",
     "tests:local": "cucumber-js -f json:report/report.json && node report.js"
   },
-  "type":"module",
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@cucumber/cucumber": "^10.8.0",
+    "@cucumber/pretty-formatter": "^1.0.1",
     "@playwright/test": "^1.44.1",
     "@types/node": "^20.14.1",
     "cucumber": "^6.0.7",

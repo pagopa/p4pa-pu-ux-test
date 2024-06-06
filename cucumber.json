@@ -3,6 +3,9 @@
     "formatOptions": {
         "snippetInterface": "async-await"
     },
+    "format": [
+      "@cucumber/pretty-formatter"
+    ],
     "import": [
       "features/step/**/*.steps.js",
       "config/config.mjs",

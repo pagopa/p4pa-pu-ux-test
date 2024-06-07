@@ -1,15 +1,15 @@
-import { Given, When, Then } from '@cucumber/cucumber';
+import { Given, When } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 
-Given('l\'utente che clicca su {word}', async function (button) {
-    await page.getByRole('button', { name: button }).click();
-})
-
-When('l\'utente clicca su {}', async function (button) {
+Given('cliccando su {}', async function (button) {
   await page.getByRole('button', { name: button }).click();
 })
 
-Given('l\'utente che entra nella sezione {} di {}', async function (subSection, mainSection) {
+When('clicca su {}', async function (button) {
+  await page.getByRole('button', { name: button }).click();
+})
+
+Given('entra nella sezione {} di {}', async function (subSection, mainSection) {
   let linkMainSection = page.getByRole('link', { name: mainSection }).nth(1);
   await expect(linkMainSection).toBeEnabled();
   await linkMainSection.click();

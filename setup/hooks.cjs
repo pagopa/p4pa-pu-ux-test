@@ -32,7 +32,7 @@ After(async () => {
 
 After(async function (scenario) {
   if (scenario.result.status === Status.FAILED) {
-    var buffer = await global.page.screenshot({ path: `report/${scenario.pickle.name}.png`, fullPage: true })
+    var buffer = await global.page.screenshot({ path: `report/screenshots/${scenario.pickle.name}.png`, fullPage: true })
     this.attach(buffer, 'image/png');
   }
 });

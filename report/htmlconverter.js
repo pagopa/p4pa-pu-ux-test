@@ -6,5 +6,6 @@ const options ={
      output:'report/cucumber-html-report.html',
      reportSuiteAsScenarios:true,
      launchReport:true,
+     screenshotsDirectory: 'report/screenshots/'
 }
 generate(options)

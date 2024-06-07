@@ -8,4 +8,5 @@ report/*.html
 report/*.xml
 report/*.json
 report/*.png
+report/screenshots
 .env

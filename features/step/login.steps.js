@@ -1,4 +1,4 @@
-import { Given, When, Then } from '@cucumber/cucumber';
+import { Given } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 import { userInfo } from '../../config/config.mjs';
 
@@ -30,7 +30,7 @@ async function insertCredential(user) {
     var userId;
     var password;
     if ( user == 'Amministratore Globale') {
-        userId = "test";
+        userId = adminGlobal.userId;
         password = adminGlobal.password;
     } else if ( user == 'Amministratore Ente') {
         userId = adminEnte.userId;
@@ -45,7 +45,7 @@ async function insertCredential(user) {
     await global.page.getByRole('textbox', { name: 'Password' }).fill(password);
 }
 
-Given('l\'utente {} che effettua la login correttamente', async function (user) {
+Given('l\'utente {} che effettua la login', async function (user) {
     await newPage();
     await insertCredential(user);
     await global.page.getByRole('button', { name: 'Accedi' }).click();

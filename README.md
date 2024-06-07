@@ -5,13 +5,14 @@ A repository designed to gather tests that simulate the user experience on the P
 
 - Cucumber js: ```npm install --save-dev @cucumber/cucumber```
 - Playwright: ```npm init playwright@latest```
-- Report: ```npm install cucumberjs-junitxml --save-dev``` & ```npm install cucumber-html-reporter --save-dev```
+- Report: ```npm install cucumber-junit-convert --save-dev``` & ```npm install cucumber-html-reporter --save-dev```
 
 ## Test execution
 Execute ```npm run tests```, defining a script in package.json:
 ```json
 "scripts": {
-    "tests": "cucumber-js -f json:report/report.json && node report.js && cat report/report.json | npx cucumber-junit > report/junitreport.xml"
+    "tests": "cucumber-js -f json:report/report.json & node ./report/xmlconverter.js",
+    "tests:local": "cucumber-js -f json:report/report.json & node ./report/htmlconverter.js"
 } 
 ```
 

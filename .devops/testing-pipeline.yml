@@ -35,13 +35,13 @@ stages:
           maxParallel: 3
           matrix:
             gestione enti:
-              current_tag: 'ente'
+              current_tag: '@ente'
             gestione tipi dovuti:
-              current_tag: 'tipiDovuti'
+              current_tag: '@tipiDovuti'
             gestione dovuti:
-              current_tag: 'dovuti'
+              current_tag: '@dovuti'
             gestione flussi:
-              current_tag: 'flussi'
+              current_tag: '@flussi'
         steps:
           - checkout: self
           - task: UseNode@1
@@ -110,7 +110,7 @@ stages:
             inputs:
               secureFile: 'pu_ux_secrets.yaml'
           - script: |
-              npx cucumber-js --tags "${{ parameters.tag }}" --tags "~skip" -f json:report/report.json; node xmlconverter.js
+              npx cucumber-js --tags "@${{ parameters.tag }}" --tags "~skip" -f json:report/report.json; node xmlconverter.js
             displayName: 'Execute tests'
             env:
               PU_SECRET_PATH: $(pu_ux_secrets.secureFilePath)

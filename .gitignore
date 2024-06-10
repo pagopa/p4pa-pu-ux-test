@@ -7,3 +7,6 @@ config/pu_ux_secrets.yaml
 report/*.html
 report/*.xml
 report/*.json
+report/*.png
+report/screenshots
+.env

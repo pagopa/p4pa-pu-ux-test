@@ -35,13 +35,13 @@ stages:
           maxParallel: 3
           matrix:
             gestione enti:
-              current_tag: 'ente'
+              current_tag: '@ente'
             gestione tipi dovuti:
-              current_tag: 'tipiDovuti'
+              current_tag: '@tipiDovuti'
             gestione dovuti:
-              current_tag: 'dovuti'
+              current_tag: '@dovuti'
             gestione flussi:
-              current_tag: 'flussi'
+              current_tag: '@flussi'
         steps:
           - checkout: self
           - task: UseNode@1
@@ -67,18 +67,21 @@ stages:
             inputs:
               secureFile: 'pu_ux_secrets.yaml'
           - script: |
-              npm run tests --tags $TAGS --tags "~skip"
+              npx cucumber-js --tags "$TAGS" -f json:report/report.json; node ./report/xmlconverter.js
             displayName: 'Execute tests'
             env:
               PU_SECRET_PATH: $(pu_ux_secrets.secureFilePath)
               PU_TARGET_ENV: ${{ parameters.env }}
               TAGS: '$(current_tag)'
+            continueOnError: true
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: 'JUnit'
               testResultsFiles: 'report/junitreport.xml'
-              testRunTitle: 'Test Report'
               searchFolder: $(Build.SourcesDirectory)
+              failTaskOnFailedTests: true
+            continueOnError: true
+            condition: always()
             displayName: 'Publish Reports'
       - job: "Run_manual_ux_tests"
         condition: and(succeeded(), and( not(eq('${{ parameters.tag }}', '')), not(eq('${{ parameters.tag }}', 'all'))))
@@ -107,16 +110,19 @@ stages:
             inputs:
               secureFile: 'pu_ux_secrets.yaml'
           - script: |
-              npm run tests --tags "${{ parameters.tag }}" --tags "~skip"
+              npx cucumber-js --tags "@${{ parameters.tag }}" -f json:report/report.json; node ./report/xmlconverter.js
             displayName: 'Execute tests'
             env:
               PU_SECRET_PATH: $(pu_ux_secrets.secureFilePath)
               PU_TARGET_ENV: ${{ parameters.env }}
+            continueOnError: true
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: 'JUnit'
               testResultsFiles: 'report/junitreport.xml'
-              testRunTitle: 'Test Report'
               searchFolder: $(Build.SourcesDirectory)
+              failTaskOnFailedTests: true
+              publishRunAttachments: true
+            continueOnError: true
+            condition: always()
             displayName: 'Publish Reports'
-

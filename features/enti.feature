@@ -14,6 +14,6 @@ Funzionalità: Gestione Enti
         Dato l'utente Amministratore Globale che effettua la login
         Ed entra nella sezione Gestione enti di Back office
         E clicca su Inserisci nuovo ente
-        Quando inserisce i dati obbligatori relativi al nuovo Ente A e clicca su Salva
-        Allora il nuovo Ente A viene inserito correttamente
-        E l'utente visualizza l'Ente A nella lista
+        Quando inserisce i dati obbligatori relativi al nuovo Ente X e clicca su Salva
+        Allora il nuovo Ente X viene inserito correttamente
+        E l'utente visualizza l'Ente X nella lista

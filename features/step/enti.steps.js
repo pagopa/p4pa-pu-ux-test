@@ -44,8 +44,9 @@ Then('l\'utente visualizza l\'Ente {} nella lista', async function (enteId) {
     expect(await checkDataEnteList( 'DEMO', 'Ente demo P4PA', 'ESERCIZIO' )).toBeTruthy();
   } else {
     const codIpa = codIpaPrefix + enteId;
+    const nameEnte = nameEntePrefix + enteId;
     await expect(page.getByText( codIpa, { exact: true })).toBeVisible();
-    expect(await checkDataEnteList( codIpa, nameEntePrefix, 'INSERITO' )).toBeTruthy();
+    expect(await checkDataEnteList( codIpa, nameEnte, 'INSERITO' )).toBeTruthy();
   }
 })
 

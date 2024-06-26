@@ -3,7 +3,7 @@ const { chromium } = require('playwright');
 
 const options = {
   headless: true,
-  slowMo: 100
+  slowMo: 200
 };
 
 global.baseUrl = 'https://payhub.dev.p4pa.pagopa.it/myoperatore/home';
@@ -18,7 +18,7 @@ AfterAll(async () => {
 });
 
 // Create a fresh browser context for each test.
-Before(async () => {
+Before(async function () {
   global.context = await global.browser.newContext();
   global.page = await global.context.newPage();
 });

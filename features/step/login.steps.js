@@ -52,13 +52,13 @@ Given('l\'utente {} che effettua la login', async function (user) {
     const nameRegistry = getNameOfUser(user);
     await expect(global.page.getByText('Autenticato come ' + nameRegistry)).toBeVisible();
 
-    const gestioneFlussi = global.page.locator('mat-card-title').filter({ hasText: 'Gestione flussi' });
-    const gestioneDovuti = global.page.locator('mat-card-title').filter({ hasText: 'Gestione dovuti' });
+    const gestioneFlussi = global.page.getByRole('link', { name: 'Gestione flussi' }).nth(1);
+    const gestioneDovuti = global.page.getByRole('link', { name: 'Gestione dovuti' }).nth(1);
 
     await expect(gestioneFlussi).toBeVisible();
     await expect(gestioneDovuti).toBeVisible();
 
-    const backOffice = global.page.locator('mat-card-title').filter({ hasText: 'Back Office' });
+    const backOffice = global.page.getByRole('link', { name: 'Back office' }).nth(1);
     if (user != 'Operatore') {
         await expect(backOffice).toBeVisible();   
     } else {

@@ -7,3 +7,4 @@ const secretPath = process.env.PU_SECRET_PATH;
 const secrets = await loadYamlFile(secretPath);
 
 export const userInfo = secrets['userInfo'];
+export const enteInfo = secrets['ente'];

@@ -21,7 +21,17 @@ parameters:
   - name: tag
     displayName: Target tests tag (use unquoted "all" to run every un-skipped test)
     type: string
-    default: ''
+    default: 'all'
+    values:
+      - all
+      - admin_globale
+      - admin_ente
+      - operatore
+      - enti
+      - inserimento
+      - modifica
+      - logo
+      - funzionalita
 
 stages:
   - stage: UX_tests
@@ -29,13 +39,13 @@ stages:
     pool:
       name: $(selfHostedAgentPool)
     jobs:
-      - job: "Run_ux_tests_by_tag"
+      - job: "Run_all_ux_tests"
         condition: and(succeeded(), or(eq('${{ parameters.tag }}', ''), eq('${{ parameters.tag }}', 'all')))
         strategy:
           maxParallel: 3
           matrix:
             gestione enti:
-              current_tag: '@ente'
+              current_tag: '@enti'
             gestione tipi dovuti:
               current_tag: '@tipiDovuti'
             gestione dovuti:
@@ -83,7 +93,7 @@ stages:
             continueOnError: true
             condition: always()
             displayName: 'Publish Reports'
-      - job: "Run_manual_ux_tests"
+      - job: "Run_ux_tests_by_tag"
         condition: and(succeeded(), and( not(eq('${{ parameters.tag }}', '')), not(eq('${{ parameters.tag }}', 'all'))))
         steps:
           - checkout: self

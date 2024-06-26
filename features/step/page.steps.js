@@ -9,6 +9,10 @@ When('clicca su {}', async function (button) {
   await page.getByRole('button', { name: button }).click();
 })
 
+When('prova a cliccare su {}', async function (button) {
+  context.latestButton = await page.getByRole('button', { name: button });
+})
+
 Given('entra nella sezione {} di {}', async function (subSection, mainSection) {
   let linkMainSection = page.getByRole('link', { name: mainSection }).nth(1);
   await expect(linkMainSection).toBeEnabled();

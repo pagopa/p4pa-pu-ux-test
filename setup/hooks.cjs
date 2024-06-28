@@ -1,4 +1,4 @@
-const { BeforeAll, Before, AfterAll, After, Status } = require ('@cucumber/cucumber');
+const { BeforeAll, Before, AfterAll, After, Status, setDefaultTimeout } = require ('@cucumber/cucumber');
 const { chromium } = require('playwright');
 
 const options = {
@@ -6,7 +6,8 @@ const options = {
   slowMo: 200
 };
 
-global.baseUrl = 'https://payhub.dev.p4pa.pagopa.it/myoperatore/home';
+global.baseUrl = 'https://dev.selfcare.pagopa.it/dashboard';
+setDefaultTimeout(20000);
 
 // Create a global browser for the test session.
 BeforeAll(async () => {

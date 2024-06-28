@@ -1,6 +1,7 @@
 import { When, Then, Given } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 import { enteInfo } from '../../config/config.mjs';
+import { clicksOn, checkToastMessage } from './page.steps.js';
 
 const codIpaPrefix = 'UX_TEST_';
 const nameEntePrefix = 'Ente UX Test ';
@@ -28,7 +29,11 @@ async function checkDataEnteList(codIpa, nameEnte, status, withLogo) {
 }
 
 When('inserisce i dati obbligatori relativi al nuovo Ente {} e clicca su Salva', enteId => insertNewEnte( enteId ))
-Given('dopo aver inserito correttamente il nuovo Ente {} cliccando su Salva', enteId => insertNewEnte ( enteId ))
+Given('inserisce correttamente il nuovo Ente {}', async enteId => { 
+  await clicksOn('Inserisci nuovo ente');
+  await insertNewEnte( enteId );
+  await checkToastMessage('Ente inserito correttamente');
+})
 async function insertNewEnte(enteId) {
   await page.getByRole('textBox', { name: 'Codice IPA'}).fill(codIpaPrefix + enteId);
   await page.getByRole('textBox', { name: 'Nome ente'}).fill(nameEntePrefix + enteId);
@@ -41,38 +46,22 @@ async function insertNewEnte(enteId) {
   }
   await page.getByRole('textBox', { name: 'Codice fiscale ente'}).fill(enteInfo['fiscalCode'][enteId]);
 
-  await page.getByRole('button', { name: 'Salva' }).click();
-  await page.getByRole('button', { name: 'Conferma' }).click();
+  clicksOn('Salva');
+  clicksOn('Conferma');
 }
-
-Then('il nuovo Ente {} viene inserito correttamente', async function (enteId) {
-  await expect(page.getByText('Ente inserito correttamente.')).toBeVisible();
-})
-
-Then('l\'utente vede la funzionalità disabilitata', async function () {
-  await expect(context.latestButton).toBeHidden();
-})
-
-Then('l\'utente visualizza l\'errore in pagina {string}', async function (errore) {
-  await expect(page.getByText(errore)).toBeVisible(); 
-})
 
 When('aggiunge il logo dell\'Ente {} e clicca su Modifica Logo', async function (enteId){
   const fileChooserPromise = page.waitForEvent('filechooser');
   await page.locator('#fileinput').click();
   const fileChooser = await fileChooserPromise;
   await fileChooser.setFiles('./config/file/ux_test_logo.png');
-  await page.getByRole('button', { name: 'Modifica Logo' }).click();
-  await page.getByRole('button', { name: 'Conferma' }).click();
+  clicksOn('Modifica Logo');
+  clicksOn('Conferma');
 })
 
-Then('il logo per l\'Ente {} è aggiornato correttamente', async function (enteId) {
-  await expect(page.getByText('logo aggiornato correttamente')).toBeVisible();
-})
-
-Then('l\'utente visualizza l\'Ente {} nella lista', enteId => visualizeEnteList(enteId))
-Then('l\'utente visualizza l\'Ente {} nella lista {}', (enteId, additionalInfo) => visualizeEnteList(enteId, additionalInfo))
-async function visualizeEnteList(enteId, additionalInfo) {
+Then('l\'Ente {} è presente nella lista con stato {word}', (enteId, status) => checkEnteInList(enteId, status))
+Then('l\'Ente {} è presente nella lista con stato {word} e {}', (enteId, status, additionalInfo) => checkEnteInList(enteId, status, additionalInfo))
+async function checkEnteInList(enteId, status, additionalInfo) {
   await page.getByRole('button', { name: 'Gestione enti' }).click();
   await page.getByRole('button', { name: 'Visualizza tutti gli enti' }).click();
 
@@ -83,5 +72,29 @@ async function visualizeEnteList(enteId, additionalInfo) {
   const codIpa = codIpaPrefix + enteId;
   const nameEnte = nameEntePrefix + enteId;
   await expect(page.getByText( codIpa, { exact: true })).toBeVisible();
-  expect(await checkDataEnteList( codIpa, nameEnte, 'INSERITO', withLogo )).toBeTruthy();
+  expect(await checkDataEnteList( codIpa, nameEnte, status.toUpperCase(), withLogo )).toBeTruthy();
 }
+
+When('aggiunge altre informazioni relative all\'indirizzo dell\'Ente {} e clicca su Salva', async function(enteId) {
+  await page.getByRole('textBox', { name: 'Denominazione'}).fill(codIpaPrefix + enteId);
+  await page.getByRole('textBox', { name: 'Indirizzo'}).fill('Via Roma');
+  await page.getByRole('textBox', { name: 'Civico'}).fill('1');
+  await page.getByRole('textBox', { name: 'CAP'}).fill('00000');
+  await page.getByLabel('Nazione', { exact: true }).locator('span').click();
+  await page.getByRole('option', { name: 'ITALIA' }).click();
+  await page.getByLabel('Provincia', { exact: true }).locator('span').click();
+  await page.getByRole('option', { name: 'ROMA', exact: true }).click();
+  await page.getByLabel('Località', { exact: true }).locator('span').click();
+  await page.getByRole('option', { name: 'ROMA', exact: true }).click();
+
+  clicksOn('Salva');
+  clicksOn('Conferma');
+})
+
+When('cambia lo stato dell\'Ente {} in  e clicca su Salva', async function(field, enteId, newValue) {
+  let fieldTextBox = field.charAt(0).toUpperCase() + field.slice(1);
+  await page.getByRole('textBox', { name: fieldTextBox }).fill(newValue.toUpperCase());
+
+  clicksOn('Salva');
+  clicksOn('Conferma');
+})

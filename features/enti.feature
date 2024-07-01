@@ -51,7 +51,6 @@ Funzionalità: Gestione Enti
 
     @modifica
     @admin_globale
-    @test
     Scenario: L'utente Amministratore Globale modifica lo stato di un Ente
         Dato l'utente Amministratore Globale che effettua la login
         Ed entra nella sezione Gestione enti di Back office

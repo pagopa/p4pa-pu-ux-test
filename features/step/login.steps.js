@@ -9,6 +9,8 @@ const operator = userInfo.operator;
 
 async function newPage() {
     await page.goto(global.baseUrl);
+    await clicksOn('Salva le mie preferenze');
+    await clicksOn('Accedi');
     await clicksOn('Accetta tutti');
     await clicksOn('Entra con SPID');
     await page.getByLabel('test').click();
@@ -82,7 +84,6 @@ Given('l\'utente {} che effettua la login', async function (user) {
     const puLocator = await page.locator('#forward_prod-piattaforma-unitaria');
     await expect(puLocator).toBeVisible({ timeout: 5000 });
     await puLocator.click();
-    await clicksOn('Salva le mie preferenze');
 
     const nameRegistry = getNameOfUser(user);
     await checkToastMessage('Autenticato come ' + nameRegistry);

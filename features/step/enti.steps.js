@@ -91,9 +91,12 @@ When('aggiunge altre informazioni relative all\'indirizzo dell\'Ente {} e clicca
   clicksOn('Conferma');
 })
 
-When('cambia lo stato dell\'Ente {} in  e clicca su Salva', async function(field, enteId, newValue) {
-  let fieldTextBox = field.charAt(0).toUpperCase() + field.slice(1);
-  await page.getByRole('textBox', { name: fieldTextBox }).fill(newValue.toUpperCase());
+When('cambia lo stato dell\'Ente {} in {} e clicca su Salva', async function(enteId, newValue) {
+  await page.getByLabel('Stato *').locator('div').nth(2).click();
+  await page.getByRole('option', { name: newValue.toUpperCase(), exact: true }).click();
+  await page.getByLabel('Open calendar').click();
+  const date = new Date(); 
+  await page.getByText(date.getDate()).click();
 
   clicksOn('Salva');
   clicksOn('Conferma');

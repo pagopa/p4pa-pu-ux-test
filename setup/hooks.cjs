@@ -3,11 +3,11 @@ const { chromium } = require('playwright');
 
 const options = {
   headless: true,
-  slowMo: 200
+  slowMo: 100
 };
 
-global.baseUrl = 'https://dev.selfcare.pagopa.it/dashboard';
-setDefaultTimeout(20000);
+global.baseUrl = 'https://payhub.dev.p4pa.pagopa.it/myoperatore/home';
+setDefaultTimeout(25000);
 
 // Create a global browser for the test session.
 BeforeAll(async () => {

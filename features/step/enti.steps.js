@@ -157,6 +157,6 @@ Then('la funzionalità di {} risulta in stato {word}', async function(functional
   const tableFirstRow = await dialog.locator('table').locator('tr').nth(1);
   await expect(tableFirstRow.locator('td').nth(3)).toContainText(previousStatus);
   await expect(tableFirstRow.locator('td').nth(4)).toContainText(status);
-  await expect(tableFirstRow.locator('td').nth(2)).toContainText(new Date().toLocaleDateString());
+  await expect(tableFirstRow.locator('td').nth(2)).toContainText(new Date().toLocaleDateString('it-IT'));
 })
 

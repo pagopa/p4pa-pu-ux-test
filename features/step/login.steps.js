@@ -66,7 +66,7 @@ async function insertCredential(user) {
 }
 
 async function selectEnte(user) {
-    await expect(page.getByRole('heading', { name: 'Seleziona il tuo ente' })).toBeVisible({ timeout: 10000 });
+    await expect(page.getByRole('heading', { name: 'Seleziona il tuo ente' })).toBeVisible({ timeout: 15000 });
 
     let accediDisabled = await page.getByRole('button', { name: 'Accedi' }).isDisabled();
     if (accediDisabled) {

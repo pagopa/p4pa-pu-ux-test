@@ -1,7 +1,7 @@
 import { Given } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 import { userInfo } from '../../config/config.mjs';
-import { clicksOn, checkToastMessage } from './page.steps.js';
+import { clicksButton, checkToastMessage } from './page.steps.js';
 
 const adminGlobal = userInfo.adminGlobal;
 const adminEnte = userInfo.adminEnte;
@@ -9,10 +9,10 @@ const operator = userInfo.operator;
 
 async function newPage() {
     await page.goto(global.baseUrl);
-    await clicksOn('Salva le mie preferenze');
-    await clicksOn('Accedi');
-    await clicksOn('Accetta tutti');
-    await clicksOn('Entra con SPID');
+    await clicksButton('Salva le mie preferenze');
+    await clicksButton('Accedi');
+    await clicksButton('Accetta tutti');
+    await clicksButton('Entra con SPID');
     await page.getByLabel('test').click();
 }
 
@@ -61,8 +61,8 @@ async function insertCredential(user) {
     }
     await page.getByRole('textbox', { name: 'Username' }).fill(userId);
     await page.getByRole('textbox', { name: 'Password' }).fill(password);
-    await clicksOn('Invia');
-    await clicksOn('Invia');
+    await clicksButton('Invia');
+    await clicksButton('Invia');
 }
 
 async function selectEnte(user) {
@@ -71,9 +71,9 @@ async function selectEnte(user) {
     let accediDisabled = await page.getByRole('button', { name: 'Accedi' }).isDisabled();
     if (accediDisabled) {
         const enteName = getEnteNameOfUser(user);
-        await clicksOn(enteName);
+        await clicksButton(enteName);
     } 
-    await clicksOn('Accedi');
+    await clicksButton('Accedi');
 }
 
 Given('l\'utente {} che effettua la login', async function (user) {

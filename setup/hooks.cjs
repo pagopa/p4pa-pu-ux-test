@@ -19,7 +19,7 @@ AfterAll(async () => {
 });
 
 // Create a fresh browser context for each test.
-Before(async function () {
+Before(async () => {
   global.context = await global.browser.newContext();
   global.page = await global.context.newPage();
 });

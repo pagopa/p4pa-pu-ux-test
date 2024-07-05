@@ -9,4 +9,5 @@ report/*.xml
 report/*.json
 report/*.png
 report/screenshots
+report/videos
 .env

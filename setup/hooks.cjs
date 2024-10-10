@@ -2,7 +2,7 @@ const { BeforeAll, Before, AfterAll, After, Status, setDefaultTimeout } = requir
 const { chromium } = require('playwright');
 
 const options = {
-  headless: false,
+  headless: true,
   slowMo: 200
 };
 

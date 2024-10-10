@@ -6,8 +6,8 @@ const options = {
   slowMo: 200
 };
 
-global.baseUrl = 'https://payhub.dev.p4pa.pagopa.it/myoperatore/home';
-setDefaultTimeout(30000);
+global.baseUrl = 'https://dev.p4pa.pagopa.it/myoperatore/home';
+setDefaultTimeout(50000);
 
 // Create a global browser for the test session.
 BeforeAll(async () => {

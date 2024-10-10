@@ -11,7 +11,7 @@ When('prova a cliccare su {}', async function (button) {
   context.latestButton = await page.getByRole('button', { name: button });
 })
 
-Given('seleziona il tab {}', async function (tab) {
+Given('nel dettaglio ente seleziona il tab {}', async function (tab) {
   await page.getByRole('tab', { name: tab, exact: true }).click();
 })
 
@@ -20,12 +20,37 @@ Then('l\'utente vede l\'azione disabilitata', async function () {
 })
 
 Given('entra nella sezione {} di {}', async function (subSection, mainSection) {
-  let linkMainSection = page.getByRole('link', { name: mainSection }).nth(1);
-  await expect(linkMainSection).toBeEnabled();
-  await linkMainSection.click();
-  let linkSubSection = page.getByRole('link', { name: subSection }).nth(1);
-  await expect(linkSubSection).toBeEnabled();
-  await linkSubSection.click();
+  let idLocatorMainSection;
+  let idLocatorSubSection;
+  switch (mainSection){
+    case 'Gestione flussi':
+      idLocatorMainSection = '#mat-card-action-flussi'; break;
+    case 'Gestione dovuti':
+      idLocatorMainSection = '#mat-card-action-dovuti'; break;
+    case 'Back Office':
+      idLocatorMainSection = '#mat-card-action-backoffice'; break;
+    default: 
+      console.log('Sezione non valida');
+  }
+  let locatorMainSection = await page.locator(idLocatorMainSection);
+  await expect(locatorMainSection).toBeEnabled();
+  await locatorMainSection.click();
+
+  switch (subSection){
+    case 'Gestione enti':
+      idLocatorSubSection = '#mat-card-action-enti'; break;
+    case 'Gestione tipi dovuto':
+      idLocatorSubSection = '#mat-card-action-tipiDovuto'; break;
+    case 'Importazione flussi':
+      idLocatorSubSection = '#mat-card-action-flussi-import'; break;
+    case 'Flussi RT':
+      idLocatorSubSection = '#mat-card-action-flussi-export'; break;
+    default: 
+      console.log('Sezione non valida');
+  }
+  let locatorSubSection = await page.locator(idLocatorSubSection);
+  await expect(locatorSubSection).toBeEnabled();
+  await locatorSubSection.click();
 })
 
 Then('l\'utente visualizza l\'errore in pagina {string}', async function (errore) {
@@ -34,11 +59,16 @@ Then('l\'utente visualizza l\'errore in pagina {string}', async function (errore
 
 Then('l\'utente visualizza il messaggio di {string}', message => checkToastMessage(message)) 
 export async function checkToastMessage(message) {
-  const toast = await page.getByRole('alertdialog');
+  const toast = await page.getByRole('alert');
   await expect(toast).toContainText(message);
   await toast.click();
 }
 
 Then('l\'utente visualizza l\'avviso di {string}', async function (alertMessage) {
-  await expect(page.getByRole('alert')).toContainText(alertMessage);
+  let idLocatorError;
+  switch (alertMessage) {
+    case 'Email non valida':
+      idLocatorError = '#mat-error-emailAmministratore';
+  }
+  await expect(page.locator(idLocatorError)).toContainText(alertMessage);
 })

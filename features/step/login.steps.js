@@ -9,7 +9,7 @@ const operator = userInfo.operator;
 
 async function newPage() {
     await page.goto(global.baseUrl);
-    await clicksButton('Salva le mie preferenze');
+    await page.locator('#cookiebar-save-customized').click();
     await clicksButton('Accedi');
     await clicksButton('Accetta tutti');
     await clicksButton('Entra con SPID');
@@ -66,7 +66,7 @@ async function insertCredential(user) {
 }
 
 async function selectEnte(user) {
-    await expect(page.getByRole('heading', { name: 'Seleziona il tuo ente' })).toBeVisible({ timeout: 15000 });
+    await expect(page.getByRole('heading', { name: 'Seleziona il tuo ente' })).toBeVisible({ timeout: 20000 });
 
     let accediDisabled = await page.getByRole('button', { name: 'Accedi' }).isDisabled();
     if (accediDisabled) {

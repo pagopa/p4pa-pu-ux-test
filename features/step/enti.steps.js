@@ -100,8 +100,8 @@ When('cambia lo stato dell\'Ente {word} in {} e clicca su Salva', async function
   await page.locator('#mat-select-cdstatoente').click();
   await page.getByRole('option', { name: newValue.toUpperCase(), exact: true }).click();
 
-  clicksButton('Salva');
-  clicksButton('Conferma');
+  await clicksButton('Salva');
+  await clicksButton('Conferma');
 })
 
 When('prova a cambiare l\'email dell\'Ente in {string}', async function( newValue) {
@@ -119,7 +119,7 @@ Given('ricerca l\'Ente {word} nella lista per visualizzarne il dettaglio', async
   await page.locator('#button-menu-detail').click();
   // To avoid an alert for authentication problem
   await checkToastMessage('Dati non validi: Bad Access Token provided');
-  clicksButton('Close');
+  await clicksButton('Close');
 })
 
 async function getFunctionality(functionality){

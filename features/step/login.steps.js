@@ -9,7 +9,7 @@ const operator = userInfo.operator;
 
 async function newPage() {
     await page.goto(global.baseUrl);
-    await clicksButton('Salva le mie preferenze');
+    await page.locator('#cookiebar-save-customized').click();
     await clicksButton('Accedi');
     await clicksButton('Accetta tutti');
     await clicksButton('Entra con SPID');

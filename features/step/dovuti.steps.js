@@ -61,8 +61,9 @@ Then('il dovuto è presente nella lista dell\'archivio con stato {}', async func
 
 When('il cittadino paga il dovuto tramite checkout', async function () {
     const dovutoIuv = context.latestDovutoIUV;
-    global.pageCheckout = await context.newPage();
+    const pageCheckout = await global.context.newPage();
     await pageCheckout.goto('https://dev.checkout.pagopa.it/');
+    console.log(await pageCheckout.title());
     await expect(pageCheckout.getByText('Paga un avviso')).toBeVisible();
     await pageCheckout.getByRole('link', { name: 'Inserisci tu i dati' }).click();
     await pageCheckout.getByRole('textbox', { name: 'Codice Avviso'}).fill('3' + dovutoIuv);
@@ -84,5 +85,5 @@ When('il cittadino paga il dovuto tramite checkout', async function () {
     await expect(pageCheckout.getByText('Operazione confermata')).toBeVisible({ timeout: 30000 });
     await pageCheckout.getByRole('button', { name: 'Chiudi' }).click({ timeout: 100000 });
 
-    await global.pageCheckout.close();
+    await pageCheckout.close();
 })

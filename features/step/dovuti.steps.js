@@ -61,7 +61,7 @@ Then('il dovuto è presente nella lista dell\'archivio con stato {}', async func
 
 When('il cittadino paga il dovuto tramite checkout', async function () {
     const dovutoIuv = context.latestDovutoIUV;
-    const pageCheckout = await context.newPage();
+    global.pageCheckout = await context.newPage();
     await pageCheckout.goto('https://dev.checkout.pagopa.it/');
     await expect(pageCheckout.getByText('Paga un avviso')).toBeVisible();
     await pageCheckout.getByRole('link', { name: 'Inserisci tu i dati' }).click();
@@ -84,5 +84,5 @@ When('il cittadino paga il dovuto tramite checkout', async function () {
     await expect(pageCheckout.getByText('Operazione confermata')).toBeVisible({ timeout: 30000 });
     await pageCheckout.getByRole('button', { name: 'Chiudi' }).click({ timeout: 100000 });
 
-    await pageCheckout.close();
+    await global.pageCheckout.close();
 })

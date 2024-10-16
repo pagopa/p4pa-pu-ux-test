@@ -30,7 +30,7 @@ function getNameOfUser (user) {
     return name;
 }
 
-function getEnteNameOfUser (user) {
+export function getEnteNameOfUser (user) {
     var name;
     if ( user == 'Amministratore Globale') {
         name = adminGlobal.enteName;
@@ -65,21 +65,22 @@ async function insertCredential(user) {
     await clicksButton('Invia');
 }
 
-async function selectEnte(user) {
+async function selectEnteForLogin(user) {
     await expect(page.getByRole('heading', { name: 'Seleziona il tuo ente' })).toBeVisible({ timeout: 20000 });
 
     let accediDisabled = await page.getByRole('button', { name: 'Accedi' }).isDisabled();
     if (accediDisabled) {
         const enteName = getEnteNameOfUser(user);
-        await clicksButton(enteName);
+        await page.getByRole('button', { name: enteName}).click();
     } 
     await clicksButton('Accedi');
 }
 
 Given('l\'utente {} che effettua la login', async function (user) {
+    context.userLogged = user;
     await newPage();
     await insertCredential(user);
-    await selectEnte(user);
+    await selectEnteForLogin(user);
     
     const puLocator = await page.locator('#forward_prod-piattaforma-unitaria');
     await expect(puLocator).toBeVisible({ timeout: 5000 });

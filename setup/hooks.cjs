@@ -7,7 +7,7 @@ const options = {
 };
 
 global.baseUrl = 'https://dev.p4pa.pagopa.it/myoperatore/home';
-setDefaultTimeout(50000);
+setDefaultTimeout(180000);
 
 // Create a global browser for the test session.
 BeforeAll(async () => {

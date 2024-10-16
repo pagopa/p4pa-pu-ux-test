@@ -1,5 +1,6 @@
 import { Given, When, Then } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
+import { getEnteNameOfUser } from './login.steps.js';
 
 Given('cliccando su {}', button => clicksButton(button))
 Given('clicca su {}', button => clicksButton(button))
@@ -19,14 +20,30 @@ Then('l\'utente vede l\'azione disabilitata', async function () {
   await expect(context.latestButton).toBeHidden();
 })
 
+async function selectEnteToOperate() {
+  await expect(page.getByRole('dialog')).toContainText('Selezionare un ente nell\'intestazione per abilitare le funzionalità');
+  await page.locator('#mat-form-ente-field').click();
+  await page.getByRole('option', { name: getEnteNameOfUser(context.userLogged) }).click();
+}
+
+Given('entra nella sezione {}', async function (section) {
+  switch (section){
+    case 'Gestione dovuti':
+      await page.locator('#mat-card-action-dovuti').click();
+      await selectEnteToOperate();
+      await expect(page.locator('#form-dovuti')).toBeVisible();
+      break;
+    default:
+      console.log('Sezione non valida');
+  }
+})
+
 Given('entra nella sezione {} di {}', async function (subSection, mainSection) {
   let idLocatorMainSection;
   let idLocatorSubSection;
   switch (mainSection){
     case 'Gestione flussi':
       idLocatorMainSection = '#mat-card-action-flussi'; break;
-    case 'Gestione dovuti':
-      idLocatorMainSection = '#mat-card-action-dovuti'; break;
     case 'Back Office':
       idLocatorMainSection = '#mat-card-action-backoffice'; break;
     default: 

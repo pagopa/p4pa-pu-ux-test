@@ -1,5 +1,5 @@
 #language: it
-@tipiDovuto
+@tipi_dovuto
 Funzionalità: Gestione tipi dovuto
 
     @enteA
@@ -26,7 +26,6 @@ Funzionalità: Gestione tipi dovuto
         Allora l'utente visualizza il messaggio di "Tipo dovuto aggiornato correttamente"
 
     @enteA
-    @test
     Scenario: L'Amministratore Globale cancella un tipo dovuto precedentemente inserito
         Dato l'utente Amministratore Globale che effettua la login
         Ed entra nella sezione 'Gestione enti' di 'Back Office'

@@ -28,6 +28,7 @@ parameters:
       - logo
       - funzionalita
       - pagamento
+      - tipi_dovuto
 
 stages:
   - stage: UX_tests

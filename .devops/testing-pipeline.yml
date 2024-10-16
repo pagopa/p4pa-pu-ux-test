@@ -27,6 +27,7 @@ parameters:
       - enti
       - logo
       - funzionalita
+      - pagamento
 
 stages:
   - stage: UX_tests

@@ -4,7 +4,7 @@ const { chromium } = require('playwright');
 const options = {
   headless: true,
   slowMo: 200,
-  locale: 'it-IT'
+  language: 'it-IT'
 };
 
 global.baseUrl = 'https://dev.p4pa.pagopa.it/myoperatore/home';

@@ -61,7 +61,7 @@ Then('il dovuto è presente nella lista dell\'archivio con stato {}', async func
 
 When('il cittadino paga il dovuto tramite checkout', async function () {
     const dovutoIuv = context.latestDovutoIUV;
-    const pageCheckout = await global.context.newPage();
+    const pageCheckout = await context.newPage();
     await pageCheckout.goto('https://dev.checkout.pagopa.it/');
     await expect(pageCheckout.getByText('Paga un avviso')).toBeVisible();
     await pageCheckout.getByRole('link', { name: 'Inserisci tu i dati' }).click();

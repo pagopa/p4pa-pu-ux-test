@@ -5,7 +5,7 @@ import { citizenInfo, emailForCheckout, enteInfo } from '../../config/config.mjs
 import { clicksButton } from './page.steps.js';
 
 const citizen = citizenInfo.maria;
-const card = citizen.maria.card;
+const card = citizenInfo.maria.card;
 const tipoDovutoName = 'Licenza per ux test';
 
 When('inserisce i dati obbligatori del nuovo dovuto con generazione avviso e clicca su Salva', async function () {

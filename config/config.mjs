@@ -8,3 +8,5 @@ const secrets = await loadYamlFile(secretPath);
 
 export const userInfo = secrets['userInfo'];
 export const enteInfo = secrets['ente'];
+export const citizenInfo = secrets['citizenInfo'];
+export const emailForCheckout = secrets['emailForCheckout'];

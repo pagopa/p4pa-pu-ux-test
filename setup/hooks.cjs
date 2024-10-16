@@ -7,7 +7,7 @@ const options = {
 };
 
 global.baseUrl = 'https://dev.p4pa.pagopa.it/myoperatore/home';
-setDefaultTimeout(50000);
+setDefaultTimeout(180000);
 
 // Create a global browser for the test session.
 BeforeAll(async () => {
@@ -20,7 +20,7 @@ AfterAll(async () => {
 
 // Create a fresh browser context for each test.
 Before(async () => {
-  global.context = await global.browser.newContext();
+  global.context = await global.browser.newContext({ locale: 'it-IT'});
   global.page = await global.context.newPage();
 });
 

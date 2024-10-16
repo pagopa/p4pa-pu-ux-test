@@ -63,7 +63,6 @@ When('il cittadino paga il dovuto tramite checkout', async function () {
     const dovutoIuv = context.latestDovutoIUV;
     const pageCheckout = await global.context.newPage();
     await pageCheckout.goto('https://dev.checkout.pagopa.it/');
-    console.log(await pageCheckout.title());
     await expect(pageCheckout.getByText('Paga un avviso')).toBeVisible();
     await pageCheckout.getByRole('link', { name: 'Inserisci tu i dati' }).click();
     await pageCheckout.getByRole('textbox', { name: 'Codice Avviso'}).fill('3' + dovutoIuv);

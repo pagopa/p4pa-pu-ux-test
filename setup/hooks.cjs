@@ -3,8 +3,7 @@ const { chromium } = require('playwright');
 
 const options = {
   headless: true,
-  slowMo: 200,
-  language: 'it-IT'
+  slowMo: 200
 };
 
 global.baseUrl = 'https://dev.p4pa.pagopa.it/myoperatore/home';
@@ -21,7 +20,7 @@ AfterAll(async () => {
 
 // Create a fresh browser context for each test.
 Before(async () => {
-  global.context = await global.browser.newContext();
+  global.context = await global.browser.newContext({ locale: 'it-IT'});
   global.page = await global.context.newPage();
 });
 

@@ -136,18 +136,18 @@ Then('il Flag Visualizza Data Scadenza risulta modificabile', async function () 
 
 Then('visualizza il dettaglio del cambio stato di {word} del tipo dovuto Licenza {word}', async (action, tipoDovutoId) => {
     const titleTable = 'Registro cambio stato abilitazione - Tipo dovuto: '+ descTipoPrefix + tipoDovutoId;
-    registerChangeOfStatus(titleTable, action);
+    await registerChangeOfStatus(titleTable, action);
 })
 Then('visualizza il dettaglio del cambio stato di {word} dell\'utente {}', async (action, user) => {
     const titleTable = 'Registro cambio stato abilitazione - Utente: '+ getCodFedOfUser(user);
-    registerChangeOfStatus(titleTable, action);
+    await registerChangeOfStatus(titleTable, action);
 })
     
 async function registerChangeOfStatus(titleTable, action) {
-    let dialog = await page.getByRole('dialog', { name: titleTable });
+    const dialog = await page.getByRole('dialog', { name: titleTable });
     await expect(dialog).toBeVisible();
 
-    let tableFirstRow = await dialog.locator('table').locator('tr').nth(1);
+    const tableFirstRow = await dialog.locator('table').locator('tr').nth(1);
     if (action == 'abilitazione') {
         await expect(tableFirstRow.locator('td').nth(3)).toContainText('Disabilitato');
         await expect(tableFirstRow.locator('td').nth(4)).toContainText('Abilitato');
@@ -156,7 +156,7 @@ async function registerChangeOfStatus(titleTable, action) {
         await expect(tableFirstRow.locator('td').nth(4)).toContainText('Disabilitato');
     }
     await expect(tableFirstRow.locator('td').nth(2)).toContainText(new Date().toLocaleDateString('it-IT'));
-    await page.locator('#button-close').click();
+    await page.locator('#button-dialog-close').click();
 }
 
 Then('nella lista è presente il tipo dovuto Marca da bollo', async function () {

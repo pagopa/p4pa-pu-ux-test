@@ -44,6 +44,20 @@ export function getEnteNameOfUser (user) {
     return name;
 }
 
+export function getCodFedOfUser (user) {
+    var codFed;
+    if ( user == 'Amministratore Globale') {
+        codFed = adminGlobal.codFedUserId;
+    } else if ( user == 'Amministratore Ente') {
+        codFed = adminEnte.codFedUserId;
+    } else if (user == 'Operatore') { 
+        codFed = operator.codFedUserId;
+    } else {
+        console.log('Utente non valido');
+    }
+    return codFed;
+}
+
 async function insertCredential(user) {
     var userId;
     var password;

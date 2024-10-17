@@ -78,7 +78,7 @@ Funzionalità: Gestione tipi dovuto
         Allora l'utente visualizza il messaggio di "Tipo dovuto cancellato correttamente"
         E il tipo dovuto Licenza D non è presente nella lista
 
-    Scenario: L'Amministratore Globale abilita il tipo dovuto sull'Ente e poi lo disabilita
+    Scenario: L'Amministratore Globale abilita il tipo dovuto per l'Ente
         Dato l'utente Amministratore Globale che effettua la login
         Ed entra nella sezione 'Gestione enti' di 'Back Office'
         E ricerca l'Ente T nella lista per visualizzarne il dettaglio
@@ -89,9 +89,38 @@ Funzionalità: Gestione tipi dovuto
         E il tipo dovuto Licenza E è presente nella lista con stato Abilitato
         Quando tra le azioni disponibili clicca su Registro cambio stato
         Allora visualizza il dettaglio del cambio stato di abilitazione del tipo dovuto Licenza E
-        Quando tra le azioni disponibili clicca su Disabilita tipo dovuto
-        E clicca su Conferma
+
+    Scenario: L'Amministratore Globale disabilita il tipo dovuto per l'ente
+        Dato l'utente Amministratore Globale che effettua la login
+        Ed entra nella sezione 'Gestione enti' di 'Back Office'
+        E ricerca l'Ente T nella lista per visualizzarne il dettaglio
+        E nel dettaglio ente seleziona il tab Lista Tipi Dovuto
+        E inserisce e abilita correttamente il nuovo tipo dovuto Licenza F
+        Quando ricerca nella lista il tipo dovuto Licenza F e tra le azioni disponibili clicca su Disabilita tipo dovuto
         Allora l'utente visualizza il messaggio di "Tipo dovuto disabilitato correttamente"
-        E il tipo dovuto Licenza E è presente nella lista con stato Disabilitato
+        E il tipo dovuto Licenza F è presente nella lista con stato Disabilitato
         Quando tra le azioni disponibili clicca su Registro cambio stato
-        Allora visualizza il dettaglio del cambio stato di disabilitazione del tipo dovuto Licenza E
+        Allora visualizza il dettaglio del cambio stato di disabilitazione del tipo dovuto Licenza F
+    
+    Scenario: L'Amministratore Globale abilita un tipo dovuto per l'Operatore dell'Ente Intermediato 2 e poi lo disabilita
+        Dato l'utente Amministratore Globale che effettua la login
+        Ed entra nella sezione 'Gestione enti' di 'Back Office'
+        E ricerca l'Ente Intermediato2 nella lista per visualizzarne il dettaglio
+        E nel dettaglio ente seleziona il tab Lista Tipi Dovuto
+        E ricerca nella lista il tipo dovuto Licenza TestUX e tra le azioni disponibili clicca su Dettaglio tipo dovuto
+        E nel dettaglio ente tipo dovuto seleziona il tab Lista Operatori
+        Quando ricerca nella lista l'Operatore e tra le azioni disponibili clicca su Abilita
+        Allora l'utente visualizza il messaggio di "Operatore abilitato al tipo dovuto"
+        E l'Operatore per il tipo dovuto Licenza TestUX risulta Abilitato
+        Quando tra le azioni disponibili clicca su Registro cambio stato
+        Allora visualizza il dettaglio del cambio stato di abilitazione dell'utente Operatore
+        Quando tra le azioni disponibili clicca su Disabilita
+        E clicca su Conferma
+        Allora l'utente visualizza il messaggio di "Operatore disabilitato dal tipo dovuto"
+        E l'Operatore per il tipo dovuto Licenza TestUX risulta Disabilitato
+        Quando tra le azioni disponibili clicca su Registro cambio stato
+        Allora visualizza il dettaglio del cambio stato di disabilitazione dell'utente Operatore
+
+
+
+

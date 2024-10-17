@@ -112,13 +112,18 @@ When('prova a cambiare l\'email dell\'Ente in {string}', async function( newValu
 
 
 Given('ricerca l\'Ente {word} nella lista per visualizzarne il dettaglio', async function(enteId) {
-  const codIpa = codIpaPrefix + enteId;
+  let codIpa = codIpaPrefix + enteId;
+  if (enteId == 'Intermediato2') {
+    codIpa = 'IPA_TEST_2';
+  }
   context.latestCodIpaEnte = codIpa;
   await page.locator('#input-codiceIPA').fill(codIpa);
   await clicksButton('Cerca');
   await expect(page.getByText( codIpa, { exact: true })).toBeVisible();
   await buttonActions('Visualizza dettaglio');
-  await removeToastAuthError();
+  if (enteId != 'Intermediato2') {
+    await removeToastAuthError();
+  }
 })
 
 async function getFunctionality(functionality){

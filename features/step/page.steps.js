@@ -16,6 +16,10 @@ Given('nel dettaglio ente seleziona il tab {}', async function (tab) {
   await page.getByRole('tab', { name: tab, exact: true }).click();
 })
 
+Given('nel dettaglio ente tipo dovuto seleziona il tab {}', async function (tab) {
+  await page.getByRole('tab', { name: tab, exact: true }).click();
+})
+
 Then('l\'utente vede l\'azione disabilitata', async function () {
   await expect(context.latestButton).toBeHidden();
 })

@@ -8,6 +8,7 @@ Funzionalità: Gestione tipi dovuto
         Dato l'utente Amministratore Globale che effettua la login
         Ed entra nella sezione 'Gestione enti' di 'Back Office'
         Ed inserisce correttamente il nuovo Ente T
+        E clicca su Indietro
         Quando ricerca l'Ente T nella lista per visualizzarne il dettaglio
         E nel dettaglio ente seleziona il tab Lista Tipi Dovuto
         Allora nella lista è presente il tipo dovuto Marca da bollo 

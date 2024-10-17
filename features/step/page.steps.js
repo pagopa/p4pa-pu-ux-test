@@ -20,6 +20,10 @@ Then('l\'utente vede l\'azione disabilitata', async function () {
   await expect(context.latestButton).toBeHidden();
 })
 
+Then('l\'azione {} risulta disabilitata', async function (button) {
+  await expect(page.getByRole('button', { name: button })).toBeDisabled();
+})
+
 async function selectEnteToOperate() {
   await expect(page.getByRole('dialog')).toContainText('Selezionare un ente nell\'intestazione per abilitare le funzionalità');
   await page.locator('#mat-form-ente-field').click();
@@ -90,8 +94,23 @@ Then('l\'utente visualizza l\'avviso di {string}', async function (alertMessage)
   await expect(page.locator(idLocatorError)).toContainText(alertMessage);
 })
 
+Then('l\'utente nella casella {string} visualizza l\'avviso di {string}', async function (textbox, alertMessage) {
+  let idLocatorError;
+  switch (textbox, alertMessage) {
+    case ('Descrizione tipo dovuto','Campo obbligatorio'):
+      idLocatorError = '#mat-error-deTipo';
+  }
+  await expect(page.locator(idLocatorError)).toContainText(alertMessage);
+})
+
 export async function removeToastAuthError() {
   // To avoid an alert for authentication problem
   await checkToastMessage('Dati non validi: Bad Access Token provided');
   await clicksButton('Close');
+}
+
+When('tra le azioni disponibili clicca su {}', action => buttonActions(action))
+export async function buttonActions(action) {
+  await page.locator('table').locator('tr').nth(1).locator('#button-actions').click();
+  await clicksButton(action);
 }

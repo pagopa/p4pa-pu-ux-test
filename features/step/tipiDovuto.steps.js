@@ -133,3 +133,12 @@ Then('visualizza il dettaglio del cambio stato di {word} del tipo dovuto Licenza
     await expect(tableFirstRow.locator('td').nth(2)).toContainText(new Date().toLocaleDateString('it-IT'));
     await page.locator('#button-close').click();
 })
+
+Then('nella lista è presente il tipo dovuto Marca da bollo', async function () {
+    await page.locator('#input-codTipo').fill('MARCA_BOLLO_DIGITALE');
+    await clicksButton('Cerca');
+
+    await expect(page.locator('table')).toBeVisible();
+    await expect(page.locator('table').locator('tr').nth(1).locator('td').nth(0)).toContainText('MARCA_BOLLO_DIGITALE');
+    await expect(page.locator('table').locator('tr').nth(1).locator('td').nth(1)).toContainText('Marca da bollo digitale');
+})

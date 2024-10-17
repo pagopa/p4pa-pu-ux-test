@@ -1,7 +1,7 @@
 import { When, Then, Given } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 import { enteInfo } from '../../config/config.mjs';
-import { clicksButton, checkToastMessage, removeToastAuthError } from './page.steps.js';
+import { clicksButton, checkToastMessage, removeToastAuthError, buttonActions } from './page.steps.js';
 
 const codIpaPrefix = 'UX_TEST_';
 const nameEntePrefix = 'Ente UX Test ';
@@ -117,8 +117,7 @@ Given('ricerca l\'Ente {word} nella lista per visualizzarne il dettaglio', async
   await page.locator('#input-codiceIPA').fill(codIpa);
   await clicksButton('Cerca');
   await expect(page.getByText( codIpa, { exact: true })).toBeVisible();
-  await page.locator('table').locator('tr').nth(1).locator('#button-actions').click();
-  await page.locator('#button-menu-detail').click();
+  await buttonActions('Visualizza dettaglio');
   await removeToastAuthError();
 })
 
@@ -155,7 +154,7 @@ Then('la funzionalità di {} risulta in stato {word}', async function(functional
   const rowFunctionality = await getFunctionality(functionality);
   await expect(rowFunctionality.locator('td').nth(1)).toContainText(status);
 
-  await rowFunctionality.getByRole('button', { name: 'Azioni disponibili' }).click();
+  await rowFunctionality.locator('#button-actions').click();
   clicksButton('Registro cambio stato');
   const dialog = await page.getByRole( 'dialog', { name: 'Registro cambio stato abilitazione - Funzionalità: '+ functionality});
 

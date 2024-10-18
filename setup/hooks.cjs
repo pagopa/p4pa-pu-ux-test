@@ -3,7 +3,7 @@ const { chromium } = require('playwright');
 
 const options = {
   headless: true,
-  slowMo: 200
+  slowMo: 300
 };
 
 global.baseUrl = 'https://dev.p4pa.pagopa.it/myoperatore/home';

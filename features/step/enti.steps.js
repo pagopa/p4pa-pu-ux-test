@@ -1,7 +1,7 @@
 import { When, Then, Given } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 import { enteInfo } from '../../config/config.mjs';
-import { clicksButton, checkToastMessage } from './page.steps.js';
+import { clicksButton, checkToastMessage, removeToastAuthError, buttonActions } from './page.steps.js';
 
 const codIpaPrefix = 'UX_TEST_';
 const nameEntePrefix = 'Ente UX Test ';
@@ -37,6 +37,7 @@ Given('inserisce correttamente il nuovo Ente {word}', async enteId => {
   await insertNewEnte( enteId );
   await checkToastMessage('Ente inserito correttamente');
 })
+
 async function insertNewEnte(enteId) {
   await page.locator('#input-codIpaEnte').fill(codIpaPrefix + enteId);
   await page.locator('#input-deNomeEnte').fill(nameEntePrefix + enteId);
@@ -104,22 +105,25 @@ When('cambia lo stato dell\'Ente {word} in {} e clicca su Salva', async function
   await clicksButton('Conferma');
 })
 
-When('prova a cambiare l\'email dell\'Ente in {string}', async function( newValue) {
+When('prova a cambiare l\'email dell\'Ente in {string}', async function( newValue ) {
   await page.locator('#input-emailAmministratore').fill(newValue);
   await page.mouse.down();
 })
 
 
 Given('ricerca l\'Ente {word} nella lista per visualizzarne il dettaglio', async function(enteId) {
-  const codIpa = codIpaPrefix + enteId;
+  let codIpa = codIpaPrefix + enteId;
+  if (enteId == 'Intermediato2') {
+    codIpa = 'IPA_TEST_2';
+  }
+  context.latestCodIpaEnte = codIpa;
   await page.locator('#input-codiceIPA').fill(codIpa);
   await clicksButton('Cerca');
   await expect(page.getByText( codIpa, { exact: true })).toBeVisible();
-  await page.locator('table').locator('tr').nth(1).locator('#button-actions').click();
-  await page.locator('#button-menu-detail').click();
-  // To avoid an alert for authentication problem
-  await checkToastMessage('Dati non validi: Bad Access Token provided');
-  await clicksButton('Close');
+  await buttonActions('Visualizza dettaglio');
+  if (enteId != 'Intermediato2') {
+    await removeToastAuthError();
+  }
 })
 
 async function getFunctionality(functionality){
@@ -155,7 +159,7 @@ Then('la funzionalità di {} risulta in stato {word}', async function(functional
   const rowFunctionality = await getFunctionality(functionality);
   await expect(rowFunctionality.locator('td').nth(1)).toContainText(status);
 
-  await rowFunctionality.getByRole('button', { name: 'Azioni disponibili' }).click();
+  await rowFunctionality.locator('#button-actions').click();
   clicksButton('Registro cambio stato');
   const dialog = await page.getByRole( 'dialog', { name: 'Registro cambio stato abilitazione - Funzionalità: '+ functionality});
 

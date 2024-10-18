@@ -25,9 +25,10 @@ parameters:
     values:
       - all
       - enti
-      - logo
-      - funzionalita
+      - logo_ente
+      - funzionalita_ente
       - pagamento
+      - tipi_dovuto
 
 stages:
   - stage: UX_tests

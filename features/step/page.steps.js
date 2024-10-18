@@ -16,8 +16,16 @@ Given('nel dettaglio ente seleziona il tab {}', async function (tab) {
   await page.getByRole('tab', { name: tab, exact: true }).click();
 })
 
+Given('nel dettaglio ente tipo dovuto seleziona il tab {}', async function (tab) {
+  await page.getByRole('tab', { name: tab, exact: true }).click();
+})
+
 Then('l\'utente vede l\'azione disabilitata', async function () {
   await expect(context.latestButton).toBeHidden();
+})
+
+Then('l\'azione {} risulta disabilitata', async function (button) {
+  await expect(page.getByRole('button', { name: button })).toBeDisabled();
 })
 
 async function selectEnteToOperate() {
@@ -26,7 +34,7 @@ async function selectEnteToOperate() {
   await page.getByRole('option', { name: getEnteNameOfUser(context.userLogged) }).click();
 }
 
-Given('entra nella sezione {}', async function (section) {
+Given('entra nella sezione {string}', async function (section) {
   switch (section){
     case 'Gestione dovuti':
       await page.locator('#mat-card-action-dovuti').click();
@@ -38,7 +46,7 @@ Given('entra nella sezione {}', async function (section) {
   }
 })
 
-Given('entra nella sezione {} di {}', async function (subSection, mainSection) {
+Given('entra nella sezione {string} di {string}', async function (subSection, mainSection) {
   let idLocatorMainSection;
   let idLocatorSubSection;
   switch (mainSection){
@@ -89,3 +97,24 @@ Then('l\'utente visualizza l\'avviso di {string}', async function (alertMessage)
   }
   await expect(page.locator(idLocatorError)).toContainText(alertMessage);
 })
+
+Then('l\'utente nella casella {string} visualizza l\'avviso di {string}', async function (textbox, alertMessage) {
+  let idLocatorError;
+  switch (textbox, alertMessage) {
+    case ('Descrizione tipo dovuto','Campo obbligatorio'):
+      idLocatorError = '#mat-error-deTipo';
+  }
+  await expect(page.locator(idLocatorError)).toContainText(alertMessage);
+})
+
+export async function removeToastAuthError() {
+  // To avoid an alert for authentication problem
+  await checkToastMessage('Dati non validi: Bad Access Token provided');
+  await clicksButton('Close');
+}
+
+When('tra le azioni disponibili clicca su {}', action => buttonActions(action))
+export async function buttonActions(action) {
+  await page.locator('table').locator('tr').nth(1).locator('#button-actions').click();
+  await clicksButton(action);
+}

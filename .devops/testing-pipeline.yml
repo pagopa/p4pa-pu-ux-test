@@ -44,7 +44,7 @@ stages:
             gestione enti:
               current_tag: '@enti'
             gestione tipi dovuti:
-              current_tag: '@tipiDovuti'
+              current_tag: '@tipi_dovuto'
             gestione dovuti:
               current_tag: '@dovuti'
             gestione flussi:

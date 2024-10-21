@@ -2,6 +2,10 @@ trigger:
   branches:
     include:
       - main
+      
+variables:
+  NODE_VERSION: '22.2.0'
+  npm_config_cache: $(Pipeline.Workspace)/.npm
 
 pool:
   vmImage: 'ubuntu-22.04'

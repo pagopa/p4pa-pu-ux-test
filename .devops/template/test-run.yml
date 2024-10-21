@@ -5,14 +5,10 @@ parameters:
   - name: tag
     type: string
 
-variables:
-  nodeVersion: '22.2.0'
-  npm_config_cache: $(Pipeline.Workspace)/.npm
-
 steps:
   - task: UseNode@1
     inputs:
-      version: $(nodeVersion)
+      version: $(NODE_VERSION)
     displayName: 'Set up Node.js'
   - task: Cache@2
     inputs:

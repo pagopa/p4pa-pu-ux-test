@@ -29,7 +29,7 @@ steps:
     inputs:
       secureFile: 'pu_ux_secrets.yaml'
   - script: |
-      npx cucumber-js --tags "${{ parameters.tag }}" -f json:report/report.json; node ./report/xmlconverter.js
+      npx cucumber-js --tags "@${{ parameters.tag }}" -f json:report/report.json; node ./report/xmlconverter.js
     displayName: 'Execute tests'
     env:
       PU_SECRET_PATH: $(pu_ux_secrets.secureFilePath)

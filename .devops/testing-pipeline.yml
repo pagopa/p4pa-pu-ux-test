@@ -42,13 +42,13 @@ stages:
           maxParallel: 3
           matrix:
             gestione enti:
-              current_tag: '@enti'
+              current_tag: 'enti'
             gestione tipi dovuti:
-              current_tag: '@tipi_dovuto'
+              current_tag: 'tipi_dovuto'
             gestione dovuti:
-              current_tag: '@dovuti'
+              current_tag: 'dovuti'
             gestione flussi:
-              current_tag: '@flussi'
+              current_tag: 'flussi'
         steps:
           - checkout: self
           - template: template\test-run.yml

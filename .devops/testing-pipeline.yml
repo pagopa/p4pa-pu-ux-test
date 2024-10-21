@@ -3,11 +3,6 @@ trigger:
     include:
       - main
 
-variables:
-  nodeVersion: '21.7.1'
-  npm_config_cache: $(Pipeline.Workspace)/.npm
-  selfHostedAgentPool: 'p4pa-dev-linux-app'
-
 pool:
   vmImage: 'ubuntu-22.04'
 
@@ -33,8 +28,6 @@ parameters:
 stages:
   - stage: UX_tests
     dependsOn: [ ]
-    pool:
-      name: $(selfHostedAgentPool)
     jobs:
       - job: "Run_all_ux_tests"
         condition: and(succeeded(), or(eq('${{ parameters.tag }}', ''), eq('${{ parameters.tag }}', 'all')))

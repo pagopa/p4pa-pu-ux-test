@@ -1,6 +1,6 @@
 import { Given } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
-import { userInfo } from '../../config/config.mjs';
+import { userInfo, pageUrl } from '../../config/config.mjs';
 import { clicksButton, checkToastMessage } from './page.steps.js';
 
 const adminGlobal = userInfo.adminGlobal;
@@ -8,7 +8,7 @@ const adminEnte = userInfo.adminEnte;
 const operator = userInfo.operator;
 
 async function newPage() {
-    await page.goto(global.baseUrl);
+    await page.goto(pageUrl);
     await page.locator('#cookiebar-save-customized').click();
     await clicksButton('Accedi');
     await clicksButton('Accetta tutti');

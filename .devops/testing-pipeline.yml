@@ -14,9 +14,10 @@ parameters:
   - name: env
     displayName: Target Environment
     type: string
-    default: dev
+    default: uat
     values:
       - dev
+      - uat
   - name: tag
     displayName: Target tests tag (use unquoted "all" to run every un-skipped test)
     type: string

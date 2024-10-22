@@ -29,15 +29,18 @@ Then('l\'azione {} risulta disabilitata', async function (button) {
 })
 
 async function selectEnteToOperate() {
-  await expect(page.getByRole('dialog')).toContainText('Selezionare un ente nell\'intestazione per abilitare le funzionalità');
-  await page.locator('#mat-form-ente-field').click();
-  await page.getByRole('option', { name: getEnteNameOfUser(context.userLogged) }).click();
+  const ente = await page.inputValue('#ente-input');
+  if(ente != getEnteNameOfUser(context.userLogged)){
+    await expect(page.getByRole('dialog')).toContainText('Selezionare un ente nell\'intestazione per abilitare le funzionalità');
+    await page.locator('#mat-form-ente-field').click();
+    await page.getByRole('option', { name: getEnteNameOfUser(context.userLogged) }).click();
+  }
 }
 
 Given('entra nella sezione {string}', async function (section) {
   switch (section){
     case 'Gestione dovuti':
-      await page.locator('#mat-card-action-dovuti').click();
+      await page.locator('#mat-card-action-dovuti').click();  
       await selectEnteToOperate();
       await expect(page.locator('#form-dovuti')).toBeVisible();
       break;

@@ -6,7 +6,6 @@ const options = {
   slowMo: 300
 };
 
-global.baseUrl = 'https://dev.p4pa.pagopa.it/myoperatore/home';
 setDefaultTimeout(180000);
 
 // Create a global browser for the test session.

@@ -2,11 +2,10 @@ trigger:
   branches:
     include:
       - main
-
+      
 variables:
-  nodeVersion: '21.7.1'
+  NODE_VERSION: '22.2.0'
   npm_config_cache: $(Pipeline.Workspace)/.npm
-  selfHostedAgentPool: 'p4pa-dev-linux-app'
 
 pool:
   vmImage: 'ubuntu-22.04'
@@ -33,8 +32,6 @@ parameters:
 stages:
   - stage: UX_tests
     dependsOn: [ ]
-    pool:
-      name: $(selfHostedAgentPool)
     jobs:
       - job: "Run_all_ux_tests"
         condition: and(succeeded(), or(eq('${{ parameters.tag }}', ''), eq('${{ parameters.tag }}', 'all')))
@@ -42,94 +39,24 @@ stages:
           maxParallel: 3
           matrix:
             gestione enti:
-              current_tag: '@enti'
+              current_tag: 'enti'
             gestione tipi dovuti:
-              current_tag: '@tipi_dovuto'
+              current_tag: 'tipi_dovuto'
             gestione dovuti:
-              current_tag: '@dovuti'
+              current_tag: 'dovuti'
             gestione flussi:
-              current_tag: '@flussi'
+              current_tag: 'flussi'
         steps:
           - checkout: self
-          - task: UseNode@1
-            inputs:
-              version: $(nodeVersion)
-            displayName: 'Set up Node.js'
-          - task: Cache@2
-            inputs:
-              key: 'npm | "$(Agent.OS)" | package-lock.json'
-              restoreKeys: |
-                npm | "$(Agent.OS)"
-              path: $(npm_config_cache)
-            displayName: Cache npm
-          - script: |
-              npm ci
-            displayName: 'Install dependencies'
-          - script: |
-              npx playwright install --with-deps
-            displayName: 'Install Playwright browsers'
-          - task: DownloadSecureFile@1
-            name: pu_ux_secrets
-            displayName: 'Download PU secrets'
-            inputs:
-              secureFile: 'pu_ux_secrets.yaml'
-          - script: |
-              npx cucumber-js --tags "$TAGS" -f json:report/report.json; node ./report/xmlconverter.js
-            displayName: 'Execute tests'
-            env:
-              PU_SECRET_PATH: $(pu_ux_secrets.secureFilePath)
-              PU_TARGET_ENV: ${{ parameters.env }}
-              TAGS: '$(current_tag)'
-            continueOnError: true
-          - task: PublishTestResults@2
-            inputs:
-              testResultsFormat: 'JUnit'
-              testResultsFiles: 'report/junitreport.xml'
-              searchFolder: $(Build.SourcesDirectory)
-              failTaskOnFailedTests: true
-            continueOnError: true
-            condition: always()
-            displayName: 'Publish Reports'
+          - template: template\test-run.yml
+            parameters:
+              env: ${{ parameters.env }}
+              tag: '$(current_tag)'
       - job: "Run_ux_tests_by_tag"
         condition: and(succeeded(), and( not(eq('${{ parameters.tag }}', '')), not(eq('${{ parameters.tag }}', 'all'))))
         steps:
           - checkout: self
-          - task: UseNode@1
-            inputs:
-              version: $(nodeVersion)
-            displayName: 'Set up Node.js'
-          - task: Cache@2
-            inputs:
-              key: 'npm | "$(Agent.OS)" | package-lock.json'
-              restoreKeys: |
-                npm | "$(Agent.OS)"
-              path: $(npm_config_cache)
-            displayName: Cache npm
-          - script: |
-              npm ci
-            displayName: 'Install dependencies'
-          - script: |
-              npx playwright install --with-deps
-            displayName: 'Install Playwright browsers'
-          - task: DownloadSecureFile@1
-            name: pu_ux_secrets
-            displayName: 'Download PU secrets'
-            inputs:
-              secureFile: 'pu_ux_secrets.yaml'
-          - script: |
-              npx cucumber-js --tags "@${{ parameters.tag }}" -f json:report/report.json; node ./report/xmlconverter.js
-            displayName: 'Execute tests'
-            env:
-              PU_SECRET_PATH: $(pu_ux_secrets.secureFilePath)
-              PU_TARGET_ENV: ${{ parameters.env }}
-            continueOnError: true
-          - task: PublishTestResults@2
-            inputs:
-              testResultsFormat: 'JUnit'
-              testResultsFiles: 'report/junitreport.xml'
-              searchFolder: $(Build.SourcesDirectory)
-              failTaskOnFailedTests: true
-              publishRunAttachments: true
-            continueOnError: true
-            condition: always()
-            displayName: 'Publish Reports'
+          - template: template\test-run.yml
+            parameters:
+              env: ${{ parameters.env }}
+              tag: ${{ parameters.tag }}

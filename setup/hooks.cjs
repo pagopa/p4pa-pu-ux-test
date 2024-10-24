@@ -35,8 +35,7 @@ After(async function (scenario) {
     let buffer = await global.page.screenshot(
       { 
         path: `report/screenshots/${scenario.pickle.name}.png`,
-        fullPage: true,
-        type: "png"
+        fullPage: true
       })
     this.attach(buffer, 'image/png');
   }

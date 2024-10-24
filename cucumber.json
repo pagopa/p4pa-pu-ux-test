@@ -15,8 +15,6 @@
     ],
     "paths" : [
       "features/**/*.feature"
-    ],
-    "retry": 2,
-    "retryTagFilter": "@flaky"
+    ]
   }
 }

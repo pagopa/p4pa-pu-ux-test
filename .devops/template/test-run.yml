@@ -40,6 +40,7 @@ steps:
       testResultsFormat: 'JUnit'
       testResultsFiles: 'report/junitreport.xml'
       searchFolder: $(Build.SourcesDirectory)
+      publishRunAttachments: true
       failTaskOnFailedTests: true
     continueOnError: true
     condition: always()

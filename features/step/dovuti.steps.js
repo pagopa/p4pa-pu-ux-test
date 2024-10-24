@@ -1,7 +1,7 @@
 import { When, Then } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 import { getEnteNameOfUser } from './login.steps.js';
-import { citizenInfo, emailForCheckout, enteInfo } from '../../config/config.mjs';
+import { citizenInfo, checkoutInfo, enteInfo } from '../../config/config.mjs';
 import { clicksButton } from './page.steps.js';
 
 const citizen = citizenInfo.maria;
@@ -62,17 +62,17 @@ Then('il dovuto è presente nella lista dell\'archivio con stato {}', async func
 When('il cittadino paga il dovuto tramite checkout', async function () {
     const dovutoIuv = context.latestDovutoIUV;
     const pageCheckout = await global.context.newPage();
-    await pageCheckout.goto('https://dev.checkout.pagopa.it/');
+    await pageCheckout.goto(checkoutInfo.pageUrl);
     await expect(pageCheckout.getByText('Paga un avviso')).toBeVisible();
     await pageCheckout.getByRole('link', { name: 'Inserisci tu i dati' }).click();
     await pageCheckout.getByRole('textbox', { name: 'Codice Avviso'}).fill('3' + dovutoIuv);
     await pageCheckout.getByRole('textbox', { name: 'Codice Fiscale Ente Creditore'}).fill(enteInfo.fiscalCode.intermediato2);
     await pageCheckout.getByRole('button', { name: 'Continua', exact: true }).click();
     await pageCheckout.getByRole('button', { name: 'Vai al pagamento', exact: true }).click();
-    await pageCheckout.getByRole('textbox', { name: 'Indirizzo email'}).fill(emailForCheckout);
-    await pageCheckout.getByRole('textbox', { name: 'Ripeti di nuovo'}).fill(emailForCheckout);
+    await pageCheckout.getByRole('textbox', { name: 'Indirizzo email'}).fill(checkoutInfo.email);
+    await pageCheckout.getByRole('textbox', { name: 'Ripeti di nuovo'}).fill(checkoutInfo.email);
     await pageCheckout.getByRole('button', { name: 'Continua', exact: true }).click();
-    await pageCheckout.locator('div').filter({ hasText: /^Carte di Credito e Debito$/ }).first().click();
+    await pageCheckout.getByText(checkoutInfo.paymentMethod).click();
     await pageCheckout.frameLocator('#frame_CARD_NUMBER').getByPlaceholder('0000 0000 0000').fill(card.number);
     await pageCheckout.frameLocator('#frame_EXPIRATION_DATE').getByPlaceholder('MM/AA').fill(card.expirationDate);
     await pageCheckout.frameLocator('#frame_SECURITY_CODE').getByPlaceholder('123').fill(card.securityCode);

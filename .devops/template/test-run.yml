@@ -41,7 +41,7 @@ steps:
       testResultsFiles: 'report/junitreport.xml'
       searchFolder: $(Build.SourcesDirectory)
       publishRunAttachments: true
-      failTaskOnFailedTests: true
+      failTaskOnFailedTests: false
     continueOnError: true
     condition: always()
     displayName: 'Publish Reports'

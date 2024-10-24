@@ -6,7 +6,8 @@
     "format": [
       "@cucumber/pretty-formatter",
       ["junit", "report/junitreport.xml"],
-      ["html", "report/cucumber-html-report.html"]
+      ["html", "report/cucumber-html-report.html"],
+      ["json", "report/report.json"]
     ],
     "import": [
       "features/step/**/*.steps.js",

@@ -33,9 +33,10 @@ To run tests locally, proceed as follows:
 	```bash
 	$ npm run tests:local
 	```
-4. The test scenarios are divided by feature, and each has a related ***tag*** specified with @ at the beginning. So, if you want to test a certain feature or a single scenario you have to add it in the script, like: 
+4. In _`hooks.cjs`_ are specified of ways in which the tests are runned, such as `headless` mode or `slowMo`. If you want to test a scenario by seeing actions directly with the browser open then it should be set `headless: false`.
+5. The test scenarios are divided by feature, and each has a related ***tag*** specified with @ at the beginning. So, if you want to test a certain feature or a single scenario you have to add it in the script, like: 
 	```json
 	"tests:local": "cucumber-js --tags=\"@<mytag>\" -f json:report/report.json & node ./report/htmlconverter.js"
 	```
-5. As said before, the script at the end creates a report html where you can see the tests performed and any errors and screenshots (these are also visible in the folder `report/screenshots`).
+6. As said before, the script at the end creates a report html where you can see the tests performed and any errors and screenshots (these are also visible in the folder `report/screenshots`).
 

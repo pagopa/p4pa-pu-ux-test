@@ -103,9 +103,13 @@ Then('l\'utente visualizza l\'avviso di {string}', async function (alertMessage)
 
 Then('l\'utente nella casella {string} visualizza l\'avviso di {string}', async function (textbox, alertMessage) {
   let idLocatorError;
-  switch (textbox, alertMessage) {
-    case ('Descrizione tipo dovuto','Campo obbligatorio'):
-      idLocatorError = '#mat-error-deTipo';
+  switch (textbox) {
+    case 'Descrizione tipo dovuto':
+      idLocatorError = '#mat-error-deTipo'; break;
+    case 'Anagrafica':
+      idLocatorError = '#mat-error-anagrafica'; break;
+    case 'Codice fiscale / partita IVA':
+      idLocatorError = '#mat-error-codFiscale'; break;
   }
   await expect(page.locator(idLocatorError)).toContainText(alertMessage);
 })
@@ -119,5 +123,18 @@ export async function removeToastAuthError() {
 When('tra le azioni disponibili clicca su {}', action => buttonActions(action))
 export async function buttonActions(action) {
   await page.locator('table').locator('tr').nth(1).locator('#button-actions').click();
-  await clicksButton(action);
+  if(action.startsWith('Scarica ')){
+    context.downloadPromise = page.waitForEvent('download');
+  }
+  await page.locator('#button-menu-detail').filter({ hasText: action }).click();
 }
+
+When('spunta la casella {}', async function (checkboxName) {
+  await expect(page.getByRole('checkbox', { name: checkboxName, exact: true})).not.toBeChecked();
+  await page.getByRole('checkbox', { name: checkboxName, exact: true}).check();
+})
+
+Then('la casella {} risulta spuntata di default e non modificabile', async function (checkboxName) {
+  await expect(page.getByRole('checkbox', { name: checkboxName, exact: true})).toBeChecked();
+  await expect(page.getByRole('checkbox', { name: checkboxName, exact: true})).toBeDisabled();
+})

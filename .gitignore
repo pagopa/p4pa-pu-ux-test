@@ -10,4 +10,5 @@ report/*.json
 report/*.png
 report/screenshots
 report/videos
+report/download
 .env

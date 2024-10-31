@@ -31,7 +31,6 @@ parameters:
       - logo_ente
       - funzionalita_ente
       
-
 stages:
   - stage: UX_tests
     dependsOn: [ ]

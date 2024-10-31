@@ -36,7 +36,7 @@ stages:
   - stage: UX_tests
     dependsOn: [ ]
     jobs:
-      - job: "${{ upper(parameters.env) }}_Run_all_ux_tests"
+      - job: "${{ upper(parameters.env) }} Run all ux tests"
         condition: and(succeeded(), or(eq('${{ parameters.tag }}', ''), eq('${{ parameters.tag }}', 'all')))
         strategy:
           maxParallel: 2
@@ -55,7 +55,7 @@ stages:
             parameters:
               env: ${{ parameters.env }}
               tag: '$(current_tag)'
-      - job: "${{ upper(parameters.env) }}_Run_ux_tests_by_tag"
+      - job: "${{ upper(parameters.env) }} Run ux tests by tag"
         condition: and(succeeded(), and( not(eq('${{ parameters.tag }}', '')), not(eq('${{ parameters.tag }}', 'all'))))
         steps:
           - checkout: self

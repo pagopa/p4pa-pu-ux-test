@@ -105,9 +105,11 @@ Then('l\'utente nella casella {string} visualizza l\'avviso di {string}', async 
   let idLocatorError;
   switch (textbox) {
     case 'Descrizione tipo dovuto':
-      idLocatorError = '#mat-error-deTipo';
+      idLocatorError = '#mat-error-deTipo'; break;
     case 'Anagrafica':
-      idLocatorError = '#mat-error-anagrafica';
+      idLocatorError = '#mat-error-anagrafica'; break;
+    case 'Codice fiscale / partita IVA':
+      idLocatorError = '#mat-error-codFiscale'; break;
   }
   await expect(page.locator(idLocatorError)).toContainText(alertMessage);
 })
@@ -121,10 +123,10 @@ export async function removeToastAuthError() {
 When('tra le azioni disponibili clicca su {}', action => buttonActions(action))
 export async function buttonActions(action) {
   await page.locator('table').locator('tr').nth(1).locator('#button-actions').click();
-  if(action == 'Scarica avviso'){
+  if(action.startsWith('Scarica ')){
     context.downloadPromise = page.waitForEvent('download');
   }
-  await clicksButton(action);
+  await page.locator('#button-menu-detail').filter({ hasText: action }).click();
 }
 
 When('spunta la casella {}', async function (checkboxName) {

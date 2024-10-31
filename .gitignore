@@ -10,5 +10,5 @@ report/*.json
 report/*.png
 report/screenshots
 report/videos
-report/avvisi
+report/download
 .env

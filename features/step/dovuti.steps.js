@@ -228,7 +228,7 @@ Then('nel dettaglio dati sono presenti due sezioni con i dati dell\'Ente Primari
 })
 
 Then('il dovuto è presente nella lista con stato {string} e con data scadenza aggiornata', async function (status){
-    const isMultibeneficiario = false;
+    var isMultibeneficiario = false;
     if (context.dovuto.multibeneficiario == 'SI') { 
         isMultibeneficiario = true 
     };

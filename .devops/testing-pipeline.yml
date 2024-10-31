@@ -25,10 +25,12 @@ parameters:
     values:
       - all
       - enti
+      - tipi_dovuto
+      - dovuti
+      - pagamento
       - logo_ente
       - funzionalita_ente
-      - pagamento
-      - tipi_dovuto
+      
 
 stages:
   - stage: UX_tests

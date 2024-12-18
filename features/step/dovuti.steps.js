@@ -55,6 +55,9 @@ async function insertDovuto(amount, cfAnonimo) {
     await page.locator('#mat-checkbox-flgGenerateIuv-input').check();
     await expect(page.locator('#mat-checkbox-flgGenerateIuv-input')).toBeChecked();
 
+    await page.locator('#mat-checkbox-ignorePdnd-input').check();
+    await expect(page.locator('#mat-checkbox-flgGenerateIuv-input')).toBeChecked();
+
     await clicksButton('Salva');
     await expect(page.inputValue('#input-Iuv')).not.toBeNull();
     await expect(page.inputValue('#input-IUD')).not.toBeNull();
@@ -90,6 +93,9 @@ When('inserisce i dati obbligatori relativi al dovuto secondario di importo {} â
     await page.locator('#input-datiSpecificiRiscossione').fill(enteInfo.intermediato1.codTassonomicoTipoDovuto);
     await page.locator('#input-causaleMB').fill('Dovuto ux test multibeneficiario');
 
+    await page.locator('#mat-checkbox-ignorePdnd-input').check();
+    await expect(page.locator('#mat-checkbox-flgGenerateIuv-input')).toBeChecked();
+
     await clicksButton('Salva');
     await expect(page.inputValue('#input-Iuv')).not.toBeNull();
     context.dovuto["iuv"] =  await page.inputValue('#input-Iuv');
@@ -97,6 +103,10 @@ When('inserisce i dati obbligatori relativi al dovuto secondario di importo {} â
 
 When('inserisce i dati obbligatori del nuovo dovuto di importo {} e senza generazione avviso e clicca su Salva', async function(amount) {
     await inputInsertDovuto(amount, false);
+
+    await page.locator('#mat-checkbox-ignorePdnd-input').check();
+    await expect(page.locator('#mat-checkbox-flgGenerateIuv-input')).toBeChecked();
+    
     await clicksButton('Salva');
 
     await expect(page.inputValue('#input-IUD')).not.toBeNull();

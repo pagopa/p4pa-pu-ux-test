@@ -4,7 +4,7 @@
   "description": "A repository designed to gather tests that simulate the user experience on the Piattaforma Unitaria portal.",
   "scripts": {
     "tests": "cucumber-js -f json:report/report.json & node ./report/xmlconverter.js",
-    "tests:local": "cucumber-js -f json:report/report.json & node ./report/htmlconverter.js"
+    "tests:local": "cucumber-js --tags=\"@test\" -f json:report/report.json & node ./report/htmlconverter.js"
   },
   "type": "module",
   "keywords": [],

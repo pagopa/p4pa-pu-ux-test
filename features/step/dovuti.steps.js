@@ -36,9 +36,7 @@ async function inputInsertDovuto(amount, cfAnonimo){
     }
     await page.locator('#input-email').fill(dovuto.email);
     await page.locator('#input-importo').fill(dovuto.importo);
-    await page.locator('#mat-datepicker-toggle-dataScadenza').click();
-    await page.getByRole('button', { name: 'Next month', exact: true }).click();
-    await page.getByRole('button', { name: '01/'}).click();
+    await page.locator('#input-dataScadenza').fill(dovuto.scadenza);
     await page.locator('#input-causale').fill(dovuto.causale);
 
     context.dovuto = dovuto;

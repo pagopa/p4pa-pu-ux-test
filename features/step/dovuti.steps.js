@@ -36,9 +36,7 @@ async function inputInsertDovuto(amount, cfAnonimo){
     }
     await page.locator('#input-email').fill(dovuto.email);
     await page.locator('#input-importo').fill(dovuto.importo);
-    await page.locator('#mat-datepicker-toggle-dataScadenza').click();
-    await page.getByRole('button', { name: 'Next month', exact: true }).click();
-    await page.getByRole('button', { name: '01/'}).click();
+    await page.locator('#input-dataScadenza').fill(dovuto.scadenza);
     await page.locator('#input-causale').fill(dovuto.causale);
 
     context.dovuto = dovuto;
@@ -53,6 +51,9 @@ When('inserisce i dati obbligatori del nuovo dovuto con codice fiscale anonimo e
 async function insertDovuto(amount, cfAnonimo) {
     await inputInsertDovuto(amount, cfAnonimo);
     await page.locator('#mat-checkbox-flgGenerateIuv-input').check();
+    await expect(page.locator('#mat-checkbox-flgGenerateIuv-input')).toBeChecked();
+
+    await page.locator('#mat-checkbox-ignorePdnd-input').check();
     await expect(page.locator('#mat-checkbox-flgGenerateIuv-input')).toBeChecked();
 
     await clicksButton('Salva');
@@ -90,6 +91,9 @@ When('inserisce i dati obbligatori relativi al dovuto secondario di importo {} â
     await page.locator('#input-datiSpecificiRiscossione').fill(enteInfo.intermediato1.codTassonomicoTipoDovuto);
     await page.locator('#input-causaleMB').fill('Dovuto ux test multibeneficiario');
 
+    await page.locator('#mat-checkbox-ignorePdnd-input').check();
+    await expect(page.locator('#mat-checkbox-flgGenerateIuv-input')).toBeChecked();
+
     await clicksButton('Salva');
     await expect(page.inputValue('#input-Iuv')).not.toBeNull();
     context.dovuto["iuv"] =  await page.inputValue('#input-Iuv');
@@ -97,6 +101,10 @@ When('inserisce i dati obbligatori relativi al dovuto secondario di importo {} â
 
 When('inserisce i dati obbligatori del nuovo dovuto di importo {} e senza generazione avviso e clicca su Salva', async function(amount) {
     await inputInsertDovuto(amount, false);
+
+    await page.locator('#mat-checkbox-ignorePdnd-input').check();
+    await expect(page.locator('#mat-checkbox-flgGenerateIuv-input')).toBeChecked();
+    
     await clicksButton('Salva');
 
     await expect(page.inputValue('#input-IUD')).not.toBeNull();

@@ -24,12 +24,9 @@ parameters:
     default: 'all'
     values:
       - all
-      - enti
-      - tipi_dovuto
-      - dovuti
-      - pagamento
-      - logo_ente
-      - funzionalita_ente
+      - debt_positions
+      - aca
+      - gpd
       
 stages:
   - stage: UX_tests
@@ -40,14 +37,8 @@ stages:
         strategy:
           maxParallel: 2
           matrix:
-            gestione enti:
-              current_tag: 'enti'
-            gestione tipi dovuti:
-              current_tag: 'tipi_dovuto'
-            gestione dovuti:
-              current_tag: 'dovuti'
-            gestione flussi:
-              current_tag: 'flussi'
+            debt positions:
+              current_tag: 'debt_positions'
         steps:
           - checkout: self
           - template: template\test-run.yml

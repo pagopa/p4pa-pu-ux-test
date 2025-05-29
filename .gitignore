@@ -12,3 +12,4 @@ report/screenshots
 report/videos
 report/download
 .env
+.vscode

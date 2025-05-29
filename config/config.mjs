@@ -10,6 +10,5 @@ const secrets = process.env.PU_TARGET_ENV === 'dev' ? allSecrets['dev'] : allSec
 
 export const pageUrl = secrets['pageUrl'];
 export const userInfo = secrets['userInfo'];
-export const enteInfo = secrets['ente'];
 export const citizenInfo = secrets['citizenInfo'];
 export const checkoutInfo = secrets['checkout'];

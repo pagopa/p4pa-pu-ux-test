@@ -24,8 +24,13 @@ export async function checkHeading(heading) {
 
 Then('the message {string} appears', async (message) => {
   var heading = message;
+  var button = null;
   if(message == 'Debt position is been created'){
-    heading = getItTranslation(message, { description : context.debtPositionDescription })
+    heading = getItTranslation(message, { description: context.debtPosition.description });
+    button = "Back to start";
   }
   await checkHeading(heading);
+  if (button != null) {
+    await clickButton(button);
+  }
 })

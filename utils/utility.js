@@ -31,3 +31,9 @@ export function firstOfNextMonth() {
     d.setMonth(d.getMonth()+1, 1);
     return d.toLocaleDateString("it-IT");
 }
+
+
+export function getToday() {
+    var d = new Date();
+    return d.toLocaleDateString("it-IT");
+}

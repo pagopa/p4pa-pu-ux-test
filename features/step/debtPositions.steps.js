@@ -11,9 +11,9 @@ async function insertDebtPositionData(){
     const now = new Date();
     const debtPositionDescription = 'Test ux - ' + now.toLocaleString().replace(/\//g, '');
 
-    await page.getByRole('combobox', { name: getItTranslation('Type of debt position') }).click();
+    await page.locator('#debt-position-type-select').click();
     await page.getByRole('option', { name: debtPositionTypeOrg }).click();
-    await page.getByRole('textbox', { name: getItTranslation('Debt position description')}).fill(debtPositionDescription);
+    await page.locator('#description-input').fill(debtPositionDescription);
 
     context.debtPosition = {
         "description": debtPositionDescription
@@ -21,24 +21,24 @@ async function insertDebtPositionData(){
 }
 
 async function insertDebtorData() {
-    await page.getByRole('combobox', { name: getItTranslation('Person entity type') }).click();
+    await page.locator('#subject-type-select').click();
     await page.getByRole('option', { name: getItTranslation('F')}).click();
-    await page.getByRole('textbox', { name: getItTranslation('Fiscal code') }).fill(citizenInfo.fiscalCode);
-    await page.getByRole('textbox', { name: getItTranslation('Full name') }).fill(citizenInfo.name);
-    await page.getByRole('textbox', { name: getItTranslation('Address') }).fill("Via del test");
-    await page.getByRole('textbox', { name: getItTranslation('Civic') }).fill("1");
-    await page.getByRole('textbox', { name: getItTranslation('Postal code') }).fill("00000");
-    await page.getByRole('combobox', { name: getItTranslation('Province') }).click();
+    await page.locator('#tax-code-input').fill(citizenInfo.fiscalCode);
+    await page.locator('#full-name-input').fill(citizenInfo.name);
+    await page.locator('#address-input').fill("Via del test");
+    await page.locator('#civic-number-input').fill("1");
+    await page.locator('#zip-code-input').fill("00000");
+    await page.locator('#province-select').click();
     await page.getByRole('option', { name: "MI"}).click();
-    await page.getByRole('textbox', { name: getItTranslation('Location') }).fill("Milano");
+    await page.locator('#city-input').fill("Milano");
 }
 
 async function insertSingleInstallmentData(amount) {
     const remittanceInformation = "Test ux single installment";
-    await page.getByRole('textbox', { name: getItTranslation('Remittance information') }).fill(remittanceInformation);
-    await page.getByRole('combobox', { name: getItTranslation('Payment option type') }).click();
+    await page.locator('#payment-object-input').fill(remittanceInformation);
+    await page.locator('#payment-option-select').click();
     await page.getByRole('option', { name: getItTranslation('Single installment')}).click();
-    await page.getByRole('textbox', { name: getItTranslation('Amount') }).fill(amount);
+    await page.locator('#amount-input').fill(amount);
     await page.getByRole('textbox', { name: getItTranslation('Due date') }).fill(firstOfNextMonth());
 
     context.debtPosition["paymentOption"] = {
@@ -70,12 +70,12 @@ When('inserts correctly a debt position with payment option having single instal
 When('in the search section in tab {string} filters by fiscal code, debt position type and status {string}', async function (tab, status) {
     await checkHeading('What are you looking for?');
     await page.getByRole('tab', { name: getItTranslation(tab) }).click();
-    await page.getByRole('textbox', { name: getItTranslation('Search fiscal code') }).fill(citizenInfo.fiscalCode);
+    await page.locator('#fiscalCode').fill(citizenInfo.fiscalCode);
     await page.getByRole('textbox', { name: getItTranslation('Creation from') }).fill(getToday());
     await page.getByRole('textbox', { name: getItTranslation('To') , exact: true }).fill(getToday());
-    await page.getByRole('combobox', { name: getItTranslation('Debt position type org') }).click();
+    await page.locator('#typeOrgId').click();
     await page.getByRole('option', { name: debtPositionTypeOrg }).click();
-    await page.getByRole('combobox', { name: getItTranslation('Status') }).click();
+    await page.locator('#status').click();
     await page.getByRole('option', { name: getItTranslation(status) }).click();
     await clickButton(getItTranslation('Filter'));
 })
